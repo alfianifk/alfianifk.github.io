@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap');
+.navbar-nav a {
+    font-family: 'Itim', cursive;
+    font-size: 20px;
+    color: white !important;
+    text-shadow: 2px 2px 4px #000000;
+}
+.navbar-brand {
+    font-family: 'Itim', cursive;
+    font-size: 30px;
+    color: white !important;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.jumbotron {
+    position: relative;
+    background: #fff url("img/bg2.svg") center center;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+}
+.bg-pink {
+    position: relative;
+    background: #fff url("img/nav.svg") center center;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+}
+h1 {
+    font-family: 'Itim', cursive;
+}
+.card {
+    border: none;
+}
+
+.navbar-toggler {
+    border: none;
+    background-color: white;
+}

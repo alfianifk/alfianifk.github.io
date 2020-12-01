@@ -50,3 +50,10 @@ hr {
     border: none;
     background-color: white;
 }
+section  {
+    background-image: #fff;
+}
+
+footer {
+    height: 30px;
+}

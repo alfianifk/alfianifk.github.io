@@ -1,59 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&display=swap');
-.navbar-nav a {
-    font-family: 'Itim', cursive;
-    font-size: 20px;
-    color: white !important;
-    text-shadow: 2px 2px 4px #000000;
-}
-.navbar-brand {
-    font-family: 'Itim', cursive;
-    font-size: 30px;
-    color: white !important;
-    text-shadow: 2px 2px 4px #000000;
+/*EFEK UNDERLINE MIDDLE OUT*/
+
+nav ul li a:hover { 
+  display: inline-block;
+  position: relative;
+  padding-bottom: 3px;
 }
 
-hr {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+nav ul li a:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0px;
+  background: transparent;
+  transition: width .5s ease, background-color .5s ease;
+}
+nav ul li a:hover:after {
+  width: 100%;
+  background: yellow;
 }
 
-.jumbotron {
-    position: relative;
-    background: #fff url("img/bg2.svg") center center;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    overflow: hidden;
-}
-
-.arrow {
-    width: 200px;
-}
-.bg-pink {
-    position: relative;
-    background: #fff url("img/nav.svg") center center;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    overflow: hidden;
-}
-.itim {
-    font-family: 'Itim', cursive;
-}
-/*.card {
-    border: none;
-}
-*/
-.navbar-toggler {
-    border: none;
-    background-color: white;
-}
-section  {
-    background-image: #fff;
-}
-
-footer {
-    height: 30px;
-}
+/*END EFEK UNDERLINE MIDDLE OUT*/

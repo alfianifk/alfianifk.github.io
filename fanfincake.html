@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fanfin Cake - Bolen & Risol Kiyowo</title>
+    <!-- Menggunakan font Quicksand agar tulisan terlihat membulat dan lucu -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS RESET & THEME VARIABLES (NUANSA PINK & KIYOWO) */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary: #25D366; /* Hijau WA */
+            --primary-hover: #1ebd59;
+            --pink-light: #fff0f5; /* Background utama */
+            --pink-soft: #ffb6c1;
+            --pink-sweet: #ff69b4;
+            --pink-dark: #c71585;
+            --dark: #4a3740;
+            --white: #ffffff;
+            --shadow-soft: 0 8px 20px rgba(255, 182, 193, 0.2);
+            --radius-cute: 24px;
+        }
+
+        /* BACKGROUND BERMOTIF POLKADOT KIYOWO */
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: var(--pink-light);
+            /* Pola polkadot transparan yang manis */
+            background-image: radial-gradient(var(--white) 15%, transparent 16%),
+                              radial-gradient(var(--white) 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: var(--dark); 
+            line-height: 1.6;
+            scroll-behavior: smooth; /* Efek scroll halus */
+        }
+
+        /* JUMBOTRON INTERAKTIF & INTERAKTIF */
+        .jumbotron {
+            position: relative;
+            background: linear-gradient(135deg, #ffe4e1 0%, #fff0f5 100%);
+            padding: 100px 20px;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 4px dashed var(--pink-soft);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Elemen Melayang (Floating Icons) */
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: floatUpDown 4s ease-in-out infinite;
+            user-select: none;
+            pointer-events: none;
+        }
+        .icon-1 { top: 15%; left: 10%; animation-delay: 0s; }
+        .icon-2 { top: 25%; right: 12%; animation-delay: 1s; font-size: 2.5rem; }
+        .icon-3 { bottom: 15%; left: 15%; animation-delay: 2s; }
+        .icon-4 { bottom: 20%; right: 18%; animation-delay: 1.5s; }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+        }
+
+        .jumbotron-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .logo-tag {
+            background: var(--white);
+            color: var(--pink-dark);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 2px solid var(--pink-soft);
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.15);
+        }
+
+        .jumbotron h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--pink-sweet);
+            text-shadow: 3px 3px 0px var(--white);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .jumbotron p {
+            font-size: 1.2rem;
+            color: #8b5a70;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Tombol Cek Menu (Interaktif) */
+        .btn-jumbo {
+            display: inline-block;
+            background: var(--pink-sweet);
+            color: var(--white);
+            text-decoration: none;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 15px rgba(255, 105, 180, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-jumbo:hover {
+            background: var(--pink-dark);
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(199, 21, 133, 0.5);
+        }
+
+        /* MAIN LAYOUT */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 900px) {
+            .main-container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* KATALOG PRODUK */
+        .grid-katalog { 
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px; 
+        }
+
+        .card { 
+            background: var(--white); 
+            border-radius: var(--radius-cute); 
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            display: flex; 
+            flex-direction: column; 
+            border: 2px solid #ffe4e1;
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.25);
+            border-color: var(--pink-sweet);
+        }
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background: #fff0f5;
+        }
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+        .detail {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .detail h3 { 
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--pink-dark);
+        }
+        .detail .deskripsi {
+            font-size: 0.9rem;
+            color: #8b5a70;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .harga { 
+            font-size: 1.35rem;
+            font-weight: 700; 
+            color: var(--pink-sweet); 
+            margin-bottom: 15px;
+            background: #fff0f5;
+            padding: 5px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            align-self: center;
+        }
+
+        /* TOMBOL ADD TO CART PINK */
+        .btn-add { 
+            background: var(--pink-sweet); 
+            color: var(--white); 
+            border: none;
+            padding: 12px; 
+            border-radius: var(--radius-cute); 
+            font-weight: 700; 
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+        }
+        .btn-add:hover { 
+            background: var(--pink-dark); 
+            transform: translateY(-2px);
+        }
+
+        /* KERANJANG BELANJA */
+        .cart-box {
+            background: var(--white);
+            border-radius: var(--radius-cute);
+            padding: 25px;
+            border: 2px dashed var(--pink-soft);
+            box-shadow: var(--shadow-soft);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .cart-box h2 {
+            font-size: 1.4rem;
+            color: var(--pink-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #ffe4e1;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-count {
+            background: var(--pink-sweet);
+            color: var(--white);
+            font-size: 0.9rem;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #ffe4e1;
+        }
+        .cart-item-info h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--pink-dark);
+        }
+        .cart-item-info p {
+            font-size: 0.85rem;
+            color: #8b5a70;
+        }
+        
+        /* Kontrol Kuantitas Imut */
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-qty {
+            background: #ffe4e1;
+            color: var(--pink-dark);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .btn-qty:hover { 
+            background: var(--pink-soft); 
+            color: var(--white);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--pink-dark);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #ffe4e1;
+        }
+
+        /* TOMBOL CHECKOUT WA */
+        .btn-checkout { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--primary); 
+            color: var(--white); 
+            text-decoration: none; 
+            padding: 14px; 
+            border-radius: var(--radius-cute); 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        .btn-checkout:hover { 
+            background: var(--primary-hover); 
+            transform: translateY(-2px);
+        }
+        .btn-checkout:disabled {
+            background: #cbd5e1;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .btn-checkout svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- JUMBOTRON INTERAKTIF & BERMOTIF -->
+    <div class="jumbotron">
+        <!-- Floating Elements (Dekorasi Melayang) -->
+        <div class="floating-icon icon-1">🍩</div>
+        <div class="floating-icon icon-2">🥐</div>
+        <div class="floating-icon icon-3">🥔</div>
+        <div class="floating-icon icon-4">✨</div>
+
+        <div class="jumbotron-content">
+            <span class="logo-tag">💖 Homemade with Love 💖</span>
+            <h1>Fanfin Cake</h1>
+            <p>Spesialis donat menul, bolen lumer, dan kroket kentang lezat yang dibikin fresh setiap hari untuk menemani hari manismu! 🥰🌸</p>
+            <!-- Tombol Cek Menu dengan smooth scroll ke katalog -->
+            <a href="#katalog" class="btn-jumbo">Lihat Menu Hari Ini ✨</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container" id="katalog">
+        <!-- 1. SISI KIRI: KATALOG MAKANAN -->
+        <main>
+            <div class="grid-katalog" id="katalog-produk">
+                <!-- Diisi otomatis oleh JavaScript -->
+            </div>
+        </main>
+
+        <!-- 2. SISI KANAN: KERANJANG BELANJA -->
+        <aside class="cart-box">
+            <h2>Keranjang Belanja 🛒 <span class="cart-count" id="total-qty">0</span></h2>
+            
+            <div class="cart-items" id="item-keranjang">
+                <p style="text-align: center; color: #8b5a70; padding: 20px 0;">Wah, keranjangmu masih kosong nih... 🥺</p>
+            </div>
+
+            <div class="cart-total">
+                <span>Total Bayar:</span>
+                <span id="total-harga">Rp 0</span>
+            </div>
+
+            <button class="btn-checkout" id="btn-wa-checkout" disabled onclick="kirimPesananWA()">
+                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3.15 5.34.15 5.518 0 10.011-4.493 10.014-10.011.002-2.673-1.037-5.186-2.93-7.079-1.892-1.893-4.402-2.934-7.081-2.936-5.521 0-10.015 4.493-10.017 10.014-.001 2.032.531 4.02 1.543 5.779l-.991 3.619 3.71-.973zM18.156 14.8c-.33-.164-1.951-.964-2.252-1.074-.3-.109-.518-.164-.735.164-.217.328-.838 1.055-1.027 1.274-.19.218-.378.245-.708.082-1.129-.567-1.914-.984-2.673-2.28-.19-.325.19-.302.544-1.011.096-.194.048-.363-.024-.527-.072-.163-.735-1.769-.991-2.39-.26-.626-.54-.527-.735-.537-.189-.009-.408-.011-.627-.011-.218 0-.573.082-.872.41-.3.328-1.146 1.12-1.146 2.731 0 1.61 1.173 3.166 1.336 3.385.164.218 2.3 3.51 5.572 4.926.779.337 1.387.539 1.861.689.782.248 1.493.213 2.055.129.627-.094 1.951-.797 2.224-1.529.273-.733.273-1.364.191-1.499-.082-.134-.3-.218-.63-.382z"/></svg>
+                Kirim Orderan ke WA 🌸
+            </button>
+        </aside>
+    </div>
+
+    <script>
+        // Nomor WA Fanfin Cake
+        const NO_WA = "6282321543292"; 
+
+        // Katalog Produk Fanfin Cake (Lokal & Gambar Indah)
+        const listProduk = [
+            {
+                id: 1,
+                nama: "Donat Gembul Kiyowo 🍩",
+                deskripsi: "Donat super empuk dan menul-menul dengan topping gula salju manis yang bikin bahagia!",
+                harga: 12000,
+                gambar: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500" // Atur ke "images/donat.jpg" jika pakai folder lokal
+            },
+            {
+                id: 2,
+                nama: "Bolen Pisang Lumer (Box) 🥐",
+                deskripsi: "Bolen pisang premium khas Fanfin Cake dengan kulit pastry berlapis yang renyah dan isian pisang cokelat/keju lumer. Isi 10 pcs.",
+                harga: 15000,
+                gambar: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500" 
+            },
+            {
+                id: 3,
+                nama: "Kroket Kentang Gendut 🥔✨",
+                deskripsi: "Kroket kentang super lembut dengan isian wortel dan daging ayam cincang gurih, dibalur tepung roti yang krispi. Isi 5 pcs.",
+                harga: 5000,
+                gambar: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500" 
+            }
+        ];
+
+        let keranjang = [];
+
+        function renderKatalog() {
+            const katalogContainer = document.getElementById('katalog-produk');
+            katalogContainer.innerHTML = '';
+            
+            listProduk.forEach(produk => {
+                katalogContainer.innerHTML += `
+                    <div class="card">
+                        <div class="image-wrapper">
+                            <img src="${produk.gambar}" alt="${produk.nama}">
+                        </div>
+                        <div class="detail">
+                            <h3>${produk.nama}</h3>
+                            <p class="deskripsi">${produk.deskripsi}</p>
+                            <p class="harga">Rp ${produk.harga.toLocaleString('id-ID')}</p>
+                            <button class="btn-add" onclick="tambahKeKeranjang(${produk.id})">Tambah ke Keranjang ✨</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function tambahKeKeranjang(id) {
+            const produkDipilih = listProduk.find(p => p.id === id);
+            const itemAda = keranjang.find(item => item.id === id);
+
+            if (itemAda) {
+                itemAda.qty += 1;
+            } else {
+                keranjang.push({ ...produkDipilih, qty: 1 });
+            }
+            updateKeranjang();
+        }
+
+        function ubahQty(id, perubahan) {
+            const item = keranjang.find(item => item.id === id);
+            if (item) {
+                item.qty += perubahan;
+                if (item.qty <= 0) {
+                    keranjang = keranjang.filter(item => item.id !== id);
+                }
+            }
+            updateKeranjang();
+        }
+
+        function updateKeranjang() {
+            const containerKeranjang = document.getElementById('item-keranjang');
+            const totalQtyEl = document.getElementById('total-qty');
+            const totalHargaEl = document.getElementById('total-harga');
+            const btnCheckout = document.getElementById('btn-wa-checkout');
+
+            if (keranjang.length === 0) {
+                containerKeranjang.innerHTML = '<p style="text-align: center; color: #8b5a70; padding: 20px 0;">Wah, keranjangmu masih kosong nih... 🥺</p>';
+                totalQtyEl.innerText = '0';
+                totalHargaEl.innerText = 'Rp 0';
+                btnCheckout.disabled = true;
+                return;
+            }
+
+            containerKeranjang.innerHTML = '';
+            let totalHarga = 0;
+            let totalQty = 0;
+
+            keranjang.forEach(item => {
+                const subtotal = item.harga * item.qty;
+                totalHarga += subtotal;
+                totalQty += item.qty;
+
+                containerKeranjang.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.nama}</h4>
+                            <p>Rp ${item.harga.toLocaleString('id-ID')} x ${item.qty}</p>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="btn-qty" onclick="ubahQty(${item.id}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="btn-qty" onclick="ubahQty(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            totalQtyEl.innerText = totalQty;
+            totalHargaEl.innerText = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+            btnCheckout.disabled = false;
+        }
+
+        function kirimPesananWA() {
+            let detailBarang = '';
+            let totalBayar = 0;
+
+            keranjang.forEach((item, index) => {
+                const subtotal = item.harga * item.qty;
+                totalBayar += subtotal;
+                detailBarang += `${index + 1}. *${item.nama}*\n   🍰 Jumlah: ${item.qty} x Rp ${item.harga.toLocaleString('id-ID')}\n   ✨ Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n\n`;
+            });
+
+            const teksWhatsApp = `Halo Fanfin Cake 👋💖,\n\nAku mau order menu kiyowo ini dong:\n━━━━━━━━━━━━━━━━━━━\n\n${detailBarang}━━━━━━━━━━━━━━━━━━━\n⭐ *Total Keseluruhan:* Rp ${totalBayar.toLocaleString('id-ID')}\n\nMohon diinfo totalan + ongkirnya ya kak. Makasih! 🥰🌸`;
+
+            const linkWA = `https://wa.me/${NO_WA}?text=${encodeURIComponent(teksWhatsApp)}`;
+            window.open(linkWA, '_blank');
+        }
+
+        renderKatalog();
+    </script>
+</body>
+</html>

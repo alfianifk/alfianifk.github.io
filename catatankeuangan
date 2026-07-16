@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kas">
+<meta name="theme-color" content="#0B0E1A">
+<title>Catatan Pengeluaran</title>
+<style>
+  :root{
+    --bg-deep: #0B0E1A;
+    --glass: rgba(255,255,255,0.10);
+    --glass-strong: rgba(255,255,255,0.16);
+    --glass-border: rgba(255,255,255,0.22);
+    --glass-border-soft: rgba(255,255,255,0.10);
+    --text: #F5F6FA;
+    --text-soft: rgba(245,246,250,0.58);
+    --text-faint: rgba(245,246,250,0.38);
+    --mint: #3FE0C5;
+    --violet: #8C7BFF;
+    --coral: #FF6E7A;
+    --shadow-glass: 0 8px 32px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0; padding:0; height:100%;}
+  body{
+    background: var(--bg-deep);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  .num{ font-family: ui-rounded, -apple-system, sans-serif; font-variant-numeric: tabular-nums; }
+
+  /* Aurora background blobs */
+  .aurora{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .blob{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+  }
+  .blob.b1{ width: 340px; height: 340px; background: var(--violet); top: -120px; left: -80px; }
+  .blob.b2{ width: 300px; height: 300px; background: var(--mint); top: 120px; right: -100px; opacity:0.4; }
+  .blob.b3{ width: 260px; height: 260px; background: var(--coral); bottom: 60px; left: -60px; opacity:0.3; }
+
+  .scroll-wrap{
+    position: relative;
+    z-index: 1;
+    padding-bottom: 130px;
+    min-height: 100vh;
+  }
+
+  header{ padding: 22px 18px 8px; }
+  .eyebrow{
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  h1{
+    font-size: 26px;
+    margin: 0 0 18px;
+    font-weight: 750;
+    letter-spacing: -0.4px;
+  }
+
+  .glass{
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    position: relative;
+    overflow: hidden;
+  }
+  .glass::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  }
+
+  .balance-card{
+    border-radius: 26px;
+    padding: 20px;
+    margin: 0 18px;
+  }
+  .balance-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .balance-top .lbl{ font-size: 11px; letter-spacing:1.5px; text-transform:uppercase; color: var(--text-soft); font-weight:700; }
+  .balance-amt{ font-size: 34px; font-weight: 750; margin-top: 6px; letter-spacing: -0.6px; }
+  .balance-amt.neg{ color: var(--coral); }
+  .balance-amt.pos{ color: var(--text); }
+  .pill-nav{
+    display:flex; align-items:center; gap:4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 4px;
+  }
+  .pill-nav button{
+    background:none; border:none; color: var(--text); font-size:15px; width:26px; height:26px; border-radius:50%; cursor:pointer;
+  }
+  .pill-nav button:active{ background: rgba(255,255,255,0.15); }
+  .month-label{ font-size:12px; font-weight:700; padding: 0 6px; white-space:nowrap; }
+
+  .mini-stats{ display:flex; gap:10px; margin-top:16px; }
+  .mini-stat{ flex:1; border-radius:16px; padding: 10px 12px; background: rgba(255,255,255,0.06); border:1px solid var(--glass-border-soft); }
+  .mini-stat .lbl{ font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--text-faint); font-weight:700; }
+  .mini-stat .val{ font-size:16px; font-weight:700; margin-top:2px; }
+  .mini-stat.out .val{ color: var(--coral); }
+  .mini-stat.in .val{ color: var(--mint); }
+
+  .section-title{
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin: 24px 18px 10px;
+  }
+
+  main{ padding: 0 18px; }
+
+  .cat-summary{ border-radius: 20px; padding: 14px 16px; margin-bottom: 4px; }
+  .cat-row{ margin-bottom: 12px; }
+  .cat-row:last-child{ margin-bottom: 0; }
+  .cat-top{ display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; }
+  .cat-top .name{ font-weight:600; }
+  .cat-top .val{ color: var(--text-soft); }
+  .cat-bar-track{ height:6px; background: rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; }
+  .cat-bar-fill{ height:100%; border-radius:3px; background: linear-gradient(90deg, var(--coral), #FF9F7A); }
+
+  .entry{
+    border-radius: 20px;
+    padding: 13px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .entry .icon{
+    width: 40px; height: 40px; border-radius: 14px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--glass-border-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size: 18px; flex-shrink:0;
+  }
+  .entry .info{ flex:1; min-width:0; }
+  .entry .cat{ font-weight:700; font-size:14px; }
+  .entry .note{ font-size:12px; color: var(--text-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:1px; }
+  .entry .right{ text-align:right; flex-shrink:0; }
+  .entry .amount{ font-weight:700; font-size:14px; }
+  .entry .amount.income{ color: var(--mint); }
+  .entry .amount.expense{ color: var(--coral); }
+  .entry .date{ font-size:11px; color: var(--text-faint); margin-top:2px; }
+  .entry .del{ background:none; border:none; color: var(--text-faint); font-size:15px; padding:6px 0 0 6px; cursor:pointer; }
+
+  .empty{ text-align:center; color: var(--text-faint); font-size:13px; padding: 50px 20px; }
+
+  .fab{
+    position: fixed;
+    right: 20px;
+    bottom: max(28px, calc(env(safe-area-inset-bottom) + 12px));
+    width: 60px; height: 60px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, var(--violet), #6E5BFF);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.35);
+    font-size: 28px;
+    box-shadow: 0 10px 28px rgba(140,123,255,0.45), inset 0 1px 1px rgba(255,255,255,0.5);
+    cursor: pointer;
+    z-index: 10;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  .fab:active{ transform: scale(0.94); }
+
+  .sheet-backdrop{
+    position: fixed; inset:0; background: rgba(5,7,15,0.55);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    display:none; z-index: 20;
+  }
+  .sheet-backdrop.show{ display:block; }
+  .sheet{
+    position: fixed; left:10px; right:10px; bottom:10px;
+    background: rgba(20,22,34,0.78);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    backdrop-filter: blur(30px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 20px 20px max(20px, env(safe-area-inset-bottom));
+    transform: translateY(120%);
+    transition: transform 0.3s cubic-bezier(.32,.72,0,1);
+    z-index: 21;
+    max-height: 86vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .sheet.show{ transform: translateY(0); }
+  .sheet h2{ font-size: 19px; margin: 0 0 16px; font-weight:750; letter-spacing:-0.3px; }
+  .toggle-row{ display:flex; gap:6px; margin-bottom:16px; background: rgba(255,255,255,0.06); padding:4px; border-radius:16px; }
+  .toggle-row button{
+    flex:1; padding: 10px; border-radius: 12px; border: none;
+    background: transparent; font-weight:700; font-size:13px; color: var(--text-soft);
+    cursor:pointer; transition: all 0.2s;
+  }
+  .toggle-row button.active.expense{ background: rgba(255,110,122,0.22); color: var(--coral); }
+  .toggle-row button.active.income{ background: rgba(63,224,197,0.2); color: var(--mint); }
+
+  label{ display:block; font-size:11px; font-weight:700; color: var(--text-faint); margin: 14px 0 6px; text-transform:uppercase; letter-spacing:1.2px; }
+  input, select, textarea{
+    width:100%; padding: 13px 14px; border-radius: 14px; border: 1px solid var(--glass-border-soft);
+    background: rgba(255,255,255,0.07); font-size: 15px; color: var(--text); font-family: inherit;
+  }
+  input::placeholder{ color: var(--text-faint); }
+  input:focus, select:focus, textarea:focus{ outline:none; border-color: var(--violet); background: rgba(255,255,255,0.1); }
+  .amount-input{ font-size: 22px; font-weight:750; }
+  .cat-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:8px; margin-top:4px; }
+  .cat-chip{
+    padding: 11px 4px; border-radius: 16px; border: 1px solid var(--glass-border-soft);
+    background: rgba(255,255,255,0.06); font-size: 20px; text-align:center; cursor:pointer; position:relative;
+    transition: all 0.15s;
+  }
+  .cat-chip .chip-lbl{ display:block; font-size:9px; margin-top:3px; color: var(--text-faint); font-weight:600; }
+  .cat-chip.active{ border-color: rgba(140,123,255,0.6); background: rgba(140,123,255,0.18); }
+  .save-btn{
+    width:100%; padding: 16px; margin-top: 22px; border:1px solid rgba(255,255,255,0.3); border-radius: 16px;
+    background: linear-gradient(145deg, var(--violet), #6E5BFF); color: #fff; font-size:15px; font-weight:750; cursor:pointer;
+    box-shadow: 0 8px 20px rgba(140,123,255,0.35);
+  }
+  .save-btn:active{ transform: scale(0.98); }
+  .close-x{ position:absolute; top:18px; right:20px; background: rgba(255,255,255,0.1); border:none; width:30px; height:30px; border-radius:50%; font-size:15px; color: var(--text-soft); cursor:pointer; }
+
+  .confirm-backdrop{
+    position: fixed; inset:0; background: rgba(5,7,15,0.55);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    display:none; align-items:center; justify-content:center;
+    z-index: 30; padding: 20px;
+  }
+  .confirm-backdrop.show{ display:flex; }
+  .confirm-card{
+    width: 100%; max-width: 320px;
+    background: rgba(24,26,40,0.82);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    backdrop-filter: blur(30px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.22s cubic-bezier(.32,.72,0,1), opacity 0.22s;
+  }
+  .confirm-backdrop.show .confirm-card{ transform: scale(1); opacity: 1; }
+  .confirm-icon{
+    width: 52px; height:52px; border-radius: 16px; margin: 0 auto 14px;
+    background: rgba(255,110,122,0.18); border: 1px solid rgba(255,110,122,0.3);
+    display:flex; align-items:center; justify-content:center; font-size: 24px;
+  }
+  .confirm-card h3{ font-size: 16px; margin: 0 0 6px; font-weight: 750; }
+  .confirm-card p{ font-size: 13px; color: var(--text-soft); margin: 0 0 20px; line-height:1.4; }
+  .confirm-actions{ display:flex; gap:10px; }
+  .confirm-actions button{
+    flex:1; padding: 12px; border-radius: 14px; font-size:14px; font-weight:700; cursor:pointer;
+  }
+  .confirm-cancel{ background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border-soft); color: var(--text); }
+  .confirm-cancel:active{ background: rgba(255,255,255,0.14); }
+  .confirm-delete{ background: linear-gradient(145deg, var(--coral), #FF4D5E); border: 1px solid rgba(255,255,255,0.3); color: #fff; box-shadow: 0 8px 20px rgba(255,110,122,0.35); }
+  .confirm-delete:active{ transform: scale(0.98); }
+
+  @media (prefers-reduced-motion: reduce){
+    .sheet{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aurora">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<div class="scroll-wrap">
+  <header>
+    <p class="eyebrow">Buku Kas Pribadi</p>
+    <h1>Catatan Pengeluaran</h1>
+  </header>
+
+  <div class="glass balance-card">
+    <div class="balance-top">
+      <div>
+        <div class="lbl">Saldo Bersih</div>
+        <div class="balance-amt num pos" id="totalBalance">Rp0</div>
+      </div>
+      <div class="pill-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <span class="month-label" id="monthLabel"></span>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="mini-stats">
+      <div class="mini-stat out">
+        <div class="lbl">Keluar</div>
+        <div class="val num" id="totalOut">Rp0</div>
+      </div>
+      <div class="mini-stat in">
+        <div class="lbl">Masuk</div>
+        <div class="val num" id="totalIn">Rp0</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="summaryBlock"></div>
+
+  <p class="section-title">Transaksi</p>
+  <main>
+    <div id="entryList"></div>
+  </main>
+</div>
+
+<button class="fab" onclick="openSheet()">+</button>
+
+<div class="sheet-backdrop" id="backdrop" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <button class="close-x" onclick="closeSheet()">✕</button>
+  <h2>Tambah Transaksi</h2>
+  <div class="toggle-row">
+    <button id="btnExpense" class="active expense" onclick="setType('expense')">Pengeluaran</button>
+    <button id="btnIncome" class="income" onclick="setType('income')">Pemasukan</button>
+  </div>
+
+  <label>Jumlah (Rp)</label>
+  <input type="number" inputmode="numeric" id="inpAmount" class="amount-input num" placeholder="0">
+
+  <label>Kategori</label>
+  <div class="cat-grid" id="catGrid"></div>
+
+  <label>Catatan (opsional)</label>
+  <input type="text" id="inpNote" placeholder="mis. beli kopi">
+
+  <label>Tanggal</label>
+  <input type="date" id="inpDate">
+
+  <button class="save-btn" onclick="saveEntry()">Simpan</button>
+</div>
+
+<div class="confirm-backdrop" id="confirmBackdrop">
+  <div class="confirm-card">
+    <div class="confirm-icon">🗑</div>
+    <h3>Hapus transaksi ini?</h3>
+    <p>Data yang sudah dihapus tidak bisa dikembalikan lagi.</p>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="cancelDelete()">Batal</button>
+      <button class="confirm-delete" onclick="confirmDelete()">Hapus</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const EXPENSE_CATS = [
+  {k:'makanan', icon:'🍜', label:'Makan'},
+  {k:'transport', icon:'🛵', label:'Transport'},
+  {k:'belanja', icon:'🛍️', label:'Belanja'},
+  {k:'tagihan', icon:'🧾', label:'Tagihan'},
+  {k:'hiburan', icon:'🎬', label:'Hiburan'},
+  {k:'kesehatan', icon:'💊', label:'Kesehatan'},
+  {k:'pendidikan', icon:'📚', label:'Pendidikan'},
+  {k:'lainnya', icon:'📌', label:'Lainnya'},
+];
+const INCOME_CATS = [
+  {k:'gaji', icon:'💰', label:'Gaji'},
+  {k:'bonus', icon:'🎁', label:'Bonus'},
+  {k:'usaha', icon:'🏪', label:'Usaha'},
+  {k:'lainnya', icon:'📌', label:'Lainnya'},
+];
+
+let data = [];
+let currentType = 'expense';
+let currentCat = EXPENSE_CATS[0].k;
+let viewMonth = new Date().getMonth();
+let viewYear = new Date().getFullYear();
+
+const STORAGE_KEY = 'catatan_pengeluaran_data_v1';
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    data = raw ? JSON.parse(raw) : [];
+  }catch(e){ data = []; }
+}
+function persistData(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+  catch(e){ console.error('Gagal menyimpan data', e); }
+}
+
+function rupiah(n){
+  return 'Rp' + Math.round(n).toLocaleString('id-ID');
+}
+
+function monthName(m){
+  return ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][m];
+}
+
+function changeMonth(delta){
+  viewMonth += delta;
+  if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+  if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+  render();
+}
+
+function setType(t){
+  currentType = t;
+  document.getElementById('btnExpense').classList.toggle('active', t==='expense');
+  document.getElementById('btnIncome').classList.toggle('active', t==='income');
+  const cats = t === 'expense' ? EXPENSE_CATS : INCOME_CATS;
+  currentCat = cats[0].k;
+  renderCatGrid();
+}
+
+function renderCatGrid(){
+  const cats = currentType === 'expense' ? EXPENSE_CATS : INCOME_CATS;
+  const grid = document.getElementById('catGrid');
+  grid.innerHTML = cats.map(c => `
+    <div class="cat-chip ${c.k===currentCat?'active':''}" onclick="selectCat('${c.k}')">
+      ${c.icon}<span class="chip-lbl">${c.label}</span>
+    </div>
+  `).join('');
+}
+function selectCat(k){ currentCat = k; renderCatGrid(); }
+
+function openSheet(){
+  document.getElementById('inpDate').value = new Date().toISOString().slice(0,10);
+  document.getElementById('inpAmount').value = '';
+  document.getElementById('inpNote').value = '';
+  setType('expense');
+  document.getElementById('sheet').classList.add('show');
+  document.getElementById('backdrop').classList.add('show');
+}
+function closeSheet(){
+  document.getElementById('sheet').classList.remove('show');
+  document.getElementById('backdrop').classList.remove('show');
+}
+
+function saveEntry(){
+  const amount = parseFloat(document.getElementById('inpAmount').value);
+  if(!amount || amount <= 0){
+    alert('Masukkan jumlah yang valid.');
+    return;
+  }
+  const note = document.getElementById('inpNote').value.trim();
+  const date = document.getElementById('inpDate').value || new Date().toISOString().slice(0,10);
+  data.push({
+    id: Date.now().toString(),
+    type: currentType,
+    category: currentCat,
+    amount: amount,
+    note: note,
+    date: date
+  });
+  persistData();
+  closeSheet();
+  render();
+}
+
+let pendingDeleteId = null;
+
+function deleteEntry(id){
+  pendingDeleteId = id;
+  document.getElementById('confirmBackdrop').classList.add('show');
+}
+function cancelDelete(){
+  pendingDeleteId = null;
+  document.getElementById('confirmBackdrop').classList.remove('show');
+}
+function confirmDelete(){
+  if(pendingDeleteId){
+    data = data.filter(d => d.id !== pendingDeleteId);
+    persistData();
+    render();
+  }
+  pendingDeleteId = null;
+  document.getElementById('confirmBackdrop').classList.remove('show');
+}
+
+function catMeta(type, key){
+  const cats = type === 'expense' ? EXPENSE_CATS : INCOME_CATS;
+  return cats.find(c => c.k === key) || {icon:'📌', label:key};
+}
+
+function render(){
+  document.getElementById('monthLabel').textContent = monthName(viewMonth) + ' ' + viewYear;
+
+  const monthEntries = data.filter(d => {
+    const dt = new Date(d.date + 'T00:00:00');
+    return dt.getMonth() === viewMonth && dt.getFullYear() === viewYear;
+  }).sort((a,b) => b.date.localeCompare(a.date));
+
+  const totalOut = monthEntries.filter(d=>d.type==='expense').reduce((s,d)=>s+d.amount,0);
+  const totalIn = monthEntries.filter(d=>d.type==='income').reduce((s,d)=>s+d.amount,0);
+  document.getElementById('totalOut').textContent = rupiah(totalOut);
+  document.getElementById('totalIn').textContent = rupiah(totalIn);
+  const balEl = document.getElementById('totalBalance');
+  const bal = totalIn - totalOut;
+  balEl.textContent = rupiah(bal);
+  balEl.classList.toggle('neg', bal < 0);
+  balEl.classList.toggle('pos', bal >= 0);
+
+  const byCat = {};
+  monthEntries.filter(d=>d.type==='expense').forEach(d=>{
+    byCat[d.category] = (byCat[d.category]||0) + d.amount;
+  });
+  const catEntries = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+  const summaryBlock = document.getElementById('summaryBlock');
+  if(catEntries.length === 0){
+    summaryBlock.innerHTML = '';
+  } else {
+    const max = catEntries[0][1];
+    summaryBlock.innerHTML = `
+      <p class="section-title">Ringkasan Kategori</p>
+      <main>
+      <div class="glass cat-summary">
+        ${catEntries.map(([k,v]) => {
+          const meta = catMeta('expense', k);
+          const pct = Math.max(6, Math.round((v/max)*100));
+          return `
+            <div class="cat-row">
+              <div class="cat-top">
+                <span class="name">${meta.icon} ${meta.label}</span>
+                <span class="val num">${rupiah(v)}</span>
+              </div>
+              <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${pct}%"></div></div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+      </main>
+    `;
+  }
+
+  const list = document.getElementById('entryList');
+  if(monthEntries.length === 0){
+    list.innerHTML = '<div class="empty">Belum ada catatan bulan ini.<br>Ketuk tombol + untuk menambah transaksi.</div>';
+  } else {
+    list.innerHTML = monthEntries.map(d => {
+      const meta = catMeta(d.type, d.category);
+      const dt = new Date(d.date + 'T00:00:00');
+      const dateStr = dt.toLocaleDateString('id-ID', {day:'2-digit', month:'short'});
+      return `
+        <div class="glass entry">
+          <div class="icon">${meta.icon}</div>
+          <div class="info">
+            <div class="cat">${meta.label}</div>
+            <div class="note">${d.note || '-'}</div>
+          </div>
+          <div class="right">
+            <div class="amount num ${d.type}">${d.type==='expense'?'-':'+'}${rupiah(d.amount)}</div>
+            <div class="date">${dateStr}</div>
+          </div>
+          <button class="del" onclick="deleteEntry('${d.id}')">🗑</button>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+loadData();
+renderCatGrid();
+render();
+</script>
+</body>
+</html>

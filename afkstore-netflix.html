@@ -527,7 +527,35 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- LOAD LIBRARY FIREBASE COMPAT UTK KEPERLUAN WEB LAMA/PROYEK SIMPLE -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 <script>
+  // ==========================================
+  // TEMPELKAN FIREBASE CONFIG KAMU DI SINI:
+  // ==========================================
+ // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCPtWiqhta8nDvUNeT44kggIYlKnLr4seY",
+    authDomain: "afkstore-netflix.firebaseapp.com",
+    projectId: "afkstore-netflix",
+    storageBucket: "afkstore-netflix.firebasestorage.app",
+    messagingSenderId: "882548337251",
+    appId: "1:882548337251:web:ff5244cd1a5d21a614a656",
+    measurementId: "G-YC6MMSWQ8Y"
+  };
+  // Inisialisasi Firebase & Firestore
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
   const list = document.getElementById('list');
   const overlay = document.getElementById('overlay');
   const form = document.getElementById('renterForm');
@@ -538,29 +566,24 @@
   let currentFilter = 'semua';
   let searchTerm = '';
 
-  const STORAGE_KEY = 'renters';
-
   function showToast(msg){
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(()=> toast.classList.remove('show'), 2200);
   }
 
+  // AMBIL DATA REAL-TIME DARI FIREBASE FIRESTORE
   async function loadData(){
-    try{
-      const res = await window.storage.get(STORAGE_KEY, false);
-      renters = res && res.value ? JSON.parse(res.value) : [];
-    }catch(e){
-      renters = [];
-    }
-    render();
-  }
-
-  async function saveData(){
-    try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify(renters), false);
-    }catch(e){
-      showToast('Gagal menyimpan data.');
+    try {
+      db.collection("renters").onSnapshot((snapshot) => {
+        renters = [];
+        snapshot.forEach((doc) => {
+          renters.push({ id: doc.id, ...doc.data() });
+        });
+        render();
+      });
+    } catch(e) {
+      showToast('Gagal memuat data dari database.');
     }
   }
 
@@ -785,16 +808,21 @@
     openModal();
   }
 
+  // HAPUS DATA DARI FIREBASE
   async function deleteRenter(id){
     const r = renters.find(x => x.id === id);
     if(!r) return;
     if(!confirm(`Hapus data "${r.name}"?`)) return;
-    renters = renters.filter(x => x.id !== id);
-    await saveData();
-    render();
-    showToast('Data dihapus.');
+    
+    try {
+      await db.collection("renters").doc(id).delete();
+      showToast('Data dihapus.');
+    } catch(e) {
+      showToast('Gagal menghapus data.');
+    }
   }
 
+  // FORM SUBMIT (TAMBAH & EDIT) KE FIREBASE
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const id = renterIdField.value;
@@ -808,21 +836,23 @@
       duration: Number(fDuration.value)
     };
 
-    if(id){
-      const idx = renters.findIndex(x => x.id === id);
-      if(idx > -1) renters[idx] = { ...renters[idx], ...data };
-      showToast('Perubahan disimpan.');
-    }else{
-      data.id = 'r_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
-      renters.push(data);
-      showToast('Penyewa ditambahkan.');
+    try {
+      if(id){
+        // Edit data
+        await db.collection("renters").doc(id).update(data);
+        showToast('Perubahan disimpan.');
+      }else{
+        // Tambah data baru
+        await db.collection("renters").add(data);
+        showToast('Penyewa ditambahkan.');
+      }
+      closeModal();
+    } catch(e) {
+      showToast('Gagal menyimpan data.');
     }
-
-    await saveData();
-    closeModal();
-    render();
   });
 
+  // Mulai memuat data dari database pertama kali
   loadData();
 </script>
 </body>

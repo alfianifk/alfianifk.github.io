@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>afkstore's netflix — Ledger Penyewa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #121319;
+    --surface: #1B1D26;
+    --surface-raised: #22242F;
+    --stub-line: #2E313F;
+    --text-primary: #F1F2F7;
+    --text-muted: #8B8FA3;
+    --accent: #E43A56;
+    --accent-soft: rgba(228,58,86,0.14);
+    --ok: #34C48F;
+    --ok-soft: rgba(52,196,143,0.14);
+    --warn: #F2B84B;
+    --warn-soft: rgba(242,184,75,0.14);
+    --expired: #6E7186;
+    --expired-soft: rgba(110,113,134,0.14);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  html,body{
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    min-height:100vh;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+
+  #app{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 20px 80px;
+  }
+
+  /* Header */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .brand-mark{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-slip{
+    width:38px;height:38px;
+    border-radius:9px;
+    background: linear-gradient(135deg, var(--accent), #9E2140);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    color:#fff;
+    flex-shrink:0;
+    box-shadow: 0 6px 18px rgba(228,58,86,0.35);
+  }
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:22px;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    color:var(--text-muted);
+    font-size:13px;
+    margin-top:2px;
+  }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border:none;
+    border-radius:10px;
+    padding:11px 18px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition: transform .12s ease, background .15s ease;
+  }
+  .btn:active{ transform: scale(0.97); }
+  .btn-primary{
+    background: var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover{ background:#F04A67; }
+  .btn-ghost{
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    border:1px solid var(--stub-line);
+  }
+  .btn-ghost:hover{ border-color:#454859; }
+  .btn-danger-ghost{
+    background: transparent;
+    color: var(--text-muted);
+    border:1px solid var(--stub-line);
+  }
+  .btn-danger-ghost:hover{ color:var(--accent); border-color:var(--accent);}
+
+  /* Stat strip */
+  .stat-strip{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .stat-card{
+    background:var(--surface);
+    border:1px solid var(--stub-line);
+    border-radius:12px;
+    padding:14px 16px;
+  }
+  .stat-num{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:22px;
+  }
+  .stat-label{
+    color:var(--text-muted);
+    font-size:11.5px;
+    margin-top:2px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+
+  /* Toolbar */
+  .toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+  }
+  .search-wrap{
+    flex:1;
+    min-width:200px;
+    position:relative;
+  }
+  .search-wrap input{
+    width:100%;
+    background:var(--surface);
+    border:1px solid var(--stub-line);
+    border-radius:10px;
+    padding:10px 14px 10px 36px;
+    color:var(--text-primary);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+  }
+  .search-wrap input:focus{
+    outline:none;
+    border-color: var(--accent);
+  }
+  .search-wrap svg{
+    position:absolute;
+    left:12px; top:50%; transform:translateY(-50%);
+    color:var(--text-muted);
+  }
+  .filter-chip{
+    background:var(--surface);
+    border:1px solid var(--stub-line);
+    color:var(--text-muted);
+    border-radius:10px;
+    padding:9px 14px;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .filter-chip.active{
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Ticket list */
+  #list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .ticket{
+    background: var(--surface);
+    border:1px solid var(--stub-line);
+    border-radius: var(--radius);
+    display:flex;
+    position:relative;
+    overflow:hidden;
+  }
+  .ticket-main{
+    flex:1;
+    padding:16px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:0;
+  }
+  .ticket-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .renter-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:16px;
+  }
+  .renter-account{
+    color: var(--text-muted);
+    font-size:12.5px;
+    margin-top:1px;
+  }
+  .ticket-actions{
+    display:flex;
+    gap:6px;
+    flex-shrink:0;
+  }
+  .icon-btn{
+    background:transparent;
+    border:none;
+    color: var(--text-muted);
+    cursor:pointer;
+    padding:5px;
+    border-radius:7px;
+    display:flex;
+  }
+  .icon-btn:hover{ background: var(--surface-raised); color: var(--text-primary); }
+
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    margin-top:4px;
+  }
+  .meta-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12.5px;
+    color: var(--text-muted);
+  }
+  .meta-item svg{ flex-shrink:0; opacity:.75; }
+  .meta-item b{ color: var(--text-primary); font-weight:500; }
+
+  /* Perforated divider */
+  .perforation{
+    width:0;
+    position:relative;
+    border-left: 1.5px dashed var(--stub-line);
+    margin: 10px 0;
+  }
+  .perforation::before,.perforation::after{
+    content:"";
+    position:absolute;
+    width:16px;height:16px;
+    background: var(--bg);
+    border-radius:50%;
+    left:-8px;
+  }
+  .perforation::before{ top:-8px; }
+  .perforation::after{ bottom:-8px; }
+
+  .ticket-stub{
+    width:132px;
+    flex-shrink:0;
+    padding:16px 14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    text-align:center;
+  }
+  .ring-wrap{ position:relative; width:64px; height:64px; }
+  .ring-wrap svg{ transform:rotate(-90deg); }
+  .ring-track{ fill:none; stroke: var(--stub-line); stroke-width:6; }
+  .ring-progress{ fill:none; stroke-width:6; stroke-linecap:round; transition: stroke-dashoffset .4s ease; }
+  .ring-label{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:13px;
+  }
+  .status-pill{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  .status-aktif{ background: var(--ok-soft); color: var(--ok); }
+  .status-segera{ background: var(--warn-soft); color: var(--warn); }
+  .status-habis{ background: var(--accent-soft); color: var(--accent); }
+
+  .empty-state{
+    text-align:center;
+    padding: 70px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state svg{ opacity:.5; margin-bottom:14px; }
+  .empty-state h3{
+    font-family:'Space Grotesk',sans-serif;
+    color: var(--text-primary);
+    font-weight:600;
+    margin:0 0 6px;
+  }
+
+  /* Modal */
+  .overlay{
+    position:fixed; inset:0;
+    background: rgba(8,9,13,0.6);
+    backdrop-filter: blur(3px);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    z-index:50;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .18s ease;
+  }
+  .overlay.show{ opacity:1; pointer-events:auto; }
+  .modal{
+    background: var(--surface);
+    border:1px solid var(--stub-line);
+    border-radius:16px;
+    width:100%;
+    max-width:440px;
+    padding:24px;
+    max-height:88vh;
+    overflow-y:auto;
+    transform: translateY(10px);
+    transition: transform .18s ease;
+  }
+  .overlay.show .modal{ transform: translateY(0); }
+  .modal-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:18px;
+  }
+  .modal-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:18px; margin:0;
+  }
+  .field{ margin-bottom:14px; }
+  .field label{
+    display:block;
+    font-size:12.5px;
+    color: var(--text-muted);
+    margin-bottom:6px;
+    font-weight:500;
+  }
+  .field input, .field select{
+    width:100%;
+    background: var(--surface-raised);
+    border:1px solid var(--stub-line);
+    border-radius:9px;
+    padding:10px 12px;
+    color: var(--text-primary);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+  }
+  .field input:focus, .field select:focus{
+    outline:none; border-color: var(--accent);
+  }
+  .field-row{ display:flex; gap:10px; }
+  .field-row .field{ flex:1; }
+  .modal-actions{
+    display:flex; gap:10px; margin-top:20px;
+  }
+  .modal-actions .btn{ flex:1; justify-content:center; }
+  .hint{ font-size:11.5px; color:var(--text-muted); margin-top:6px; }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background: var(--surface-raised);
+    border:1px solid var(--stub-line);
+    color: var(--text-primary);
+    padding:12px 18px;
+    border-radius:10px;
+    font-size:13.5px;
+    opacity:0;
+    pointer-events:none;
+    transition: all .25s ease;
+    z-index:60;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  @media (max-width:560px){
+    .stat-strip{ grid-template-columns: repeat(2,1fr); }
+    .ticket{ flex-direction:column; }
+    .ticket-stub{
+      width:100%;
+      flex-direction:row;
+      justify-content:space-between;
+      padding:12px 18px;
+    }
+    .perforation{
+      width:auto; height:0;
+      border-left:none;
+      border-top:1.5px dashed var(--stub-line);
+      margin:0;
+    }
+    .perforation::before,.perforation::after{ top:-8px; left:auto; }
+    .perforation::before{ left:-8px; }
+    .perforation::after{ right:-8px; left:auto; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <div class="brand-mark">
+      <div class="brand-slip">AS</div>
+      <div>
+        <h1>afkstore's netflix</h1>
+        <div class="subtitle">Ledger penyewa &amp; masa aktif akun</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="openAddBtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Tambah Penyewa
+    </button>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-card">
+      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-label">Total Penyewa</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statAktif" style="color:var(--ok)">0</div>
+      <div class="stat-label">Aktif</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statSegera" style="color:var(--warn)">0</div>
+      <div class="stat-label">Segera Habis</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statHabis" style="color:var(--accent)">0</div>
+      <div class="stat-label">Sudah Habis</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Cari nama, device, atau lokasi...">
+    </div>
+    <button class="filter-chip active" data-filter="semua">Semua</button>
+    <button class="filter-chip" data-filter="aktif">Aktif</button>
+    <button class="filter-chip" data-filter="segera">Segera Habis</button>
+    <button class="filter-chip" data-filter="habis">Habis</button>
+  </div>
+
+  <div id="list"></div>
+
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Tambah Penyewa</h2>
+      <button class="icon-btn" id="closeModalBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form id="renterForm">
+      <input type="hidden" id="renterId">
+      <div class="field">
+        <label for="fName">Nama Penyewa</label>
+        <input type="text" id="fName" placeholder="mis. Budi Santoso" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="fAccountType">Jenis Akun</label>
+          <input type="text" id="fAccountType" placeholder="mis. Netflix Premium" required>
+        </div>
+        <div class="field">
+          <label for="fPrice">Harga Sewa</label>
+          <input type="text" id="fPrice" placeholder="mis. Rp25.000">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="fDevice">Device</label>
+          <input type="text" id="fDevice" placeholder="mis. TV, HP, Laptop" required>
+        </div>
+        <div class="field">
+          <label for="fLocation">Lokasi</label>
+          <input type="text" id="fLocation" placeholder="mis. Bandung" required>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="fStartDate">Tanggal Mulai</label>
+          <input type="date" id="fStartDate" required>
+        </div>
+        <div class="field">
+          <label for="fDuration">Durasi (hari)</label>
+          <input type="number" id="fDuration" min="1" placeholder="mis. 30" required>
+        </div>
+      </div>
+      <div class="hint" id="endDatePreview">Tanggal habis akan dihitung otomatis.</div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="cancelBtn">Batal</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const list = document.getElementById('list');
+  const overlay = document.getElementById('overlay');
+  const form = document.getElementById('renterForm');
+  const toast = document.getElementById('toast');
+  const searchInput = document.getElementById('searchInput');
+
+  let renters = [];
+  let currentFilter = 'semua';
+  let searchTerm = '';
+
+  const STORAGE_KEY = 'renters';
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(()=> toast.classList.remove('show'), 2200);
+  }
+
+  async function loadData(){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, false);
+      renters = res && res.value ? JSON.parse(res.value) : [];
+    }catch(e){
+      renters = [];
+    }
+    render();
+  }
+
+  async function saveData(){
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(renters), false);
+    }catch(e){
+      showToast('Gagal menyimpan data.');
+    }
+  }
+
+  function addDays(dateStr, days){
+    const d = new Date(dateStr + 'T00:00:00');
+    d.setDate(d.getDate() + Number(days));
+    return d;
+  }
+
+  function formatDate(d){
+    return d.toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  function getStatus(endDate){
+    const now = new Date();
+    now.setHours(0,0,0,0);
+    const diffDays = Math.ceil((endDate - now) / (1000*60*60*24));
+    if(diffDays < 0) return { key:'habis', label:'Expired', diffDays };
+    if(diffDays <= 3) return { key:'segera', label:'Segera Habis', diffDays };
+    return { key:'aktif', label:'Aktif', diffDays };
+  }
+
+  function ringColor(statusKey){
+    if(statusKey === 'aktif') return getComputedStyle(document.documentElement).getPropertyValue('--ok').trim();
+    if(statusKey === 'segera') return getComputedStyle(document.documentElement).getPropertyValue('--warn').trim();
+    return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+  }
+
+  function renderTicket(renter){
+    const startDate = new Date(renter.startDate + 'T00:00:00');
+    const endDate = addDays(renter.startDate, renter.duration);
+    const status = getStatus(endDate);
+    const totalMs = endDate - startDate;
+    const elapsedMs = Math.min(Math.max(new Date() - startDate, 0), totalMs);
+    const pct = totalMs > 0 ? Math.min(elapsedMs / totalMs, 1) : 1;
+    const remainingPct = 1 - pct;
+
+    const radius = 26;
+    const circumference = 2 * Math.PI * radius;
+    const dashOffset = circumference * (1 - remainingPct);
+    const color = ringColor(status.key);
+
+    const daysLabel = status.diffDays < 0 ? '0h' : (status.diffDays + 'h');
+
+    const el = document.createElement('div');
+    el.className = 'ticket';
+    el.innerHTML = `
+      <div class="ticket-main">
+        <div class="ticket-top">
+          <div>
+            <div class="renter-name">${escapeHtml(renter.name)}</div>
+            <div class="renter-account">${escapeHtml(renter.accountType)}${renter.price ? ' · ' + escapeHtml(renter.price) : ''}</div>
+          </div>
+          <div class="ticket-actions">
+            <button class="icon-btn edit-btn" title="Edit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="icon-btn delete-btn" title="Hapus">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <b>${escapeHtml(renter.device)}</b>
+          </div>
+          <div class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <b>${escapeHtml(renter.location)}</b>
+          </div>
+          <div class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Mulai <b>${formatDate(startDate)}</b>
+          </div>
+          <div class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Habis <b>${formatDate(endDate)}</b>
+          </div>
+        </div>
+      </div>
+      <div class="perforation"></div>
+      <div class="ticket-stub">
+        <div class="ring-wrap">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="ring-track" cx="32" cy="32" r="${radius}"/>
+            <circle class="ring-progress" cx="32" cy="32" r="${radius}" stroke="${color}"
+              stroke-dasharray="${circumference}" stroke-dashoffset="${dashOffset}"/>
+          </svg>
+          <div class="ring-label">${daysLabel}</div>
+        </div>
+        <div class="status-pill status-${status.key}">${status.label}</div>
+      </div>
+    `;
+    el.querySelector('.edit-btn').addEventListener('click', () => openEdit(renter.id));
+    el.querySelector('.delete-btn').addEventListener('click', () => deleteRenter(renter.id));
+    return { el, status };
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  function render(){
+    list.innerHTML = '';
+    let filtered = renters.filter(r => {
+      const matchesSearch = !searchTerm ||
+        r.name.toLowerCase().includes(searchTerm) ||
+        r.device.toLowerCase().includes(searchTerm) ||
+        r.location.toLowerCase().includes(searchTerm) ||
+        r.accountType.toLowerCase().includes(searchTerm);
+      return matchesSearch;
+    });
+
+    const counts = { aktif:0, segera:0, habis:0 };
+    const rendered = filtered.map(r => {
+      const { el, status } = renderTicket(r);
+      counts[status.key]++;
+      return { el, status, endDate: addDays(r.startDate, r.duration) };
+    });
+
+    document.getElementById('statTotal').textContent = renters.length;
+    document.getElementById('statAktif').textContent = renters.length ? renters.filter(r => getStatus(addDays(r.startDate, r.duration)).key === 'aktif').length : 0;
+    document.getElementById('statSegera').textContent = renters.length ? renters.filter(r => getStatus(addDays(r.startDate, r.duration)).key === 'segera').length : 0;
+    document.getElementById('statHabis').textContent = renters.length ? renters.filter(r => getStatus(addDays(r.startDate, r.duration)).key === 'habis').length : 0;
+
+    let toShow = rendered;
+    if(currentFilter !== 'semua'){
+      toShow = rendered.filter(r => r.status.key === currentFilter);
+    }
+    toShow.sort((a,b) => a.endDate - b.endDate);
+
+    if(toShow.length === 0){
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.innerHTML = `
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/></svg>
+        <h3>Belum ada data</h3>
+        <div>Klik "Tambah Penyewa" untuk mulai mencatat.</div>
+      `;
+      list.appendChild(empty);
+    }else{
+      toShow.forEach(r => list.appendChild(r.el));
+    }
+  }
+
+  // Filter chips
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentFilter = chip.dataset.filter;
+      render();
+    });
+  });
+
+  searchInput.addEventListener('input', (e) => {
+    searchTerm = e.target.value.toLowerCase();
+    render();
+  });
+
+  // Modal handling
+  const modalTitle = document.getElementById('modalTitle');
+  const fName = document.getElementById('fName');
+  const fAccountType = document.getElementById('fAccountType');
+  const fPrice = document.getElementById('fPrice');
+  const fDevice = document.getElementById('fDevice');
+  const fLocation = document.getElementById('fLocation');
+  const fStartDate = document.getElementById('fStartDate');
+  const fDuration = document.getElementById('fDuration');
+  const renterIdField = document.getElementById('renterId');
+  const endDatePreview = document.getElementById('endDatePreview');
+
+  function updateEndPreview(){
+    if(fStartDate.value && fDuration.value){
+      const end = addDays(fStartDate.value, fDuration.value);
+      endDatePreview.textContent = 'Tanggal habis: ' + formatDate(end);
+    }else{
+      endDatePreview.textContent = 'Tanggal habis akan dihitung otomatis.';
+    }
+  }
+  fStartDate.addEventListener('input', updateEndPreview);
+  fDuration.addEventListener('input', updateEndPreview);
+
+  function openModal(){
+    overlay.classList.add('show');
+  }
+  function closeModal(){
+    overlay.classList.remove('show');
+    form.reset();
+    renterIdField.value = '';
+    endDatePreview.textContent = 'Tanggal habis akan dihitung otomatis.';
+  }
+
+  document.getElementById('openAddBtn').addEventListener('click', () => {
+    modalTitle.textContent = 'Tambah Penyewa';
+    document.getElementById('saveBtn').textContent = 'Simpan';
+    const today = new Date().toISOString().split('T')[0];
+    fStartDate.value = today;
+    openModal();
+  });
+  document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+  document.getElementById('cancelBtn').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+
+  function openEdit(id){
+    const r = renters.find(x => x.id === id);
+    if(!r) return;
+    modalTitle.textContent = 'Edit Penyewa';
+    document.getElementById('saveBtn').textContent = 'Simpan Perubahan';
+    renterIdField.value = r.id;
+    fName.value = r.name;
+    fAccountType.value = r.accountType;
+    fPrice.value = r.price || '';
+    fDevice.value = r.device;
+    fLocation.value = r.location;
+    fStartDate.value = r.startDate;
+    fDuration.value = r.duration;
+    updateEndPreview();
+    openModal();
+  }
+
+  async function deleteRenter(id){
+    const r = renters.find(x => x.id === id);
+    if(!r) return;
+    if(!confirm(`Hapus data "${r.name}"?`)) return;
+    renters = renters.filter(x => x.id !== id);
+    await saveData();
+    render();
+    showToast('Data dihapus.');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = renterIdField.value;
+    const data = {
+      name: fName.value.trim(),
+      accountType: fAccountType.value.trim(),
+      price: fPrice.value.trim(),
+      device: fDevice.value.trim(),
+      location: fLocation.value.trim(),
+      startDate: fStartDate.value,
+      duration: Number(fDuration.value)
+    };
+
+    if(id){
+      const idx = renters.findIndex(x => x.id === id);
+      if(idx > -1) renters[idx] = { ...renters[idx], ...data };
+      showToast('Perubahan disimpan.');
+    }else{
+      data.id = 'r_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      renters.push(data);
+      showToast('Penyewa ditambahkan.');
+    }
+
+    await saveData();
+    closeModal();
+    render();
+  });
+
+  loadData();
+</script>
+</body>
+</html>

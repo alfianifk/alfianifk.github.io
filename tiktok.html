@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit @alfiani.fk — Golden Hour Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430;
+    --ink-soft:#2B3446;
+    --bone:#F5F1EA;
+    --bone-dim:#C9C4BA;
+    --plum:#4A2545;
+    --coral:#E8935C;
+    --gold:#F6D48A;
+    --sage:#93B399;
+    --rose:#D88C99;
+    --line: rgba(245,241,234,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px 80px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--coral);}
+
+  /* HERO */
+  header.hero{
+    padding:56px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  h1.title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(34px,6vw,54px);
+    line-height:1.05;
+    margin-top:14px;
+    max-width:680px;
+  }
+  h1.title em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--coral);
+  }
+  .hero-sub{
+    margin-top:18px;
+    color:var(--bone-dim);
+    max-width:560px;
+    font-size:15px;
+  }
+  .tension{
+    margin-top:34px;
+    display:flex; gap:28px; flex-wrap:wrap;
+  }
+  .tension .stat{ }
+  .tension .num{
+    font-family:'Fraunces',serif;
+    font-size:44px;
+    font-weight:600;
+  }
+  .tension .num.up{color:var(--sage);}
+  .tension .num.down{color:var(--rose);}
+  .tension .label{
+    font-size:12px; color:var(--bone-dim); margin-top:2px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .tension .vs{
+    align-self:center;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--bone-dim);
+    font-size:18px;
+  }
+
+  /* SECTION SHELL */
+  section{padding:48px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:22px; flex-wrap:wrap;}
+  .sec-num{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--coral);
+    font-size:13px;
+  }
+  h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(24px,4vw,32px);
+  }
+  p.lede{color:var(--bone-dim); max-width:640px; margin-bottom:20px; font-size:15px;}
+
+  /* METRIC GRID */
+  .metrics{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px;
+  }
+  .metric{background:var(--ink); padding:18px 16px;}
+  .metric .v{font-family:'Fraunces',serif; font-size:26px; font-weight:600;}
+  .metric .l{font-size:11px; color:var(--bone-dim); margin-top:4px; text-transform:uppercase; letter-spacing:.04em;}
+  .metric .d{font-family:'IBM Plex Mono',monospace; font-size:11px; margin-top:6px;}
+  .metric .d.up{color:var(--sage);} .metric .d.down{color:var(--rose);}
+
+  /* FUNNEL / BAR */
+  .bar-row{margin-bottom:14px;}
+  .bar-row .bl{display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;}
+  .bar-track{height:8px; background:var(--ink-soft); border-radius:4px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:4px; background:linear-gradient(90deg,var(--plum),var(--coral));}
+
+  .callout{
+    margin-top:22px;
+    border-left:2px solid var(--coral);
+    padding:14px 18px;
+    background:rgba(232,147,92,0.06);
+    font-size:14px;
+    color:var(--bone);
+  }
+  .callout b{color:var(--gold);}
+
+  .search-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px;
+    border:1px solid var(--line); padding:6px 10px; border-radius:20px; color:var(--bone-dim);
+  }
+
+  /* CONTENT CARDS */
+  .posts{display:flex; flex-direction:column; gap:12px; margin-top:8px;}
+  .post{
+    display:grid; grid-template-columns:56px 1fr auto; gap:14px; align-items:center;
+    padding:14px; border:1px solid var(--line); background:var(--ink-soft);
+  }
+  .post .rk{font-family:'Fraunces',serif; font-size:22px; color:var(--coral); text-align:center;}
+  .post .cap{font-size:14px;}
+  .post .cap .why{display:block; font-size:12px; color:var(--sage); margin-top:4px;}
+  .post .views{font-family:'IBM Plex Mono',monospace; font-size:13px; text-align:right; white-space:nowrap;}
+  .post .views small{display:block; color:var(--bone-dim); font-size:10px;}
+
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px;}
+  @media(max-width:560px){.compare{grid-template-columns:1fr;}}
+  .ccard{border:1px solid var(--line); padding:18px;}
+  .ccard.win{border-color:var(--sage); background:rgba(147,179,153,0.06);}
+  .ccard h3{font-family:'Fraunces',serif; font-weight:500; font-size:17px; margin-bottom:10px;}
+  .ccard .stat-line{display:flex; justify-content:space-between; font-size:12.5px; padding:4px 0; border-top:1px solid var(--line); color:var(--bone-dim);}
+  .ccard .stat-line b{color:var(--bone); font-weight:600;}
+  .pill{display:inline-block; font-size:10px; font-family:'IBM Plex Mono',monospace; padding:3px 8px; border-radius:20px; margin-bottom:8px;}
+  .pill.win{background:var(--sage); color:var(--ink);}
+  .pill.lose{background:var(--rose); color:var(--ink);}
+
+  /* GOLDEN HOUR */
+  .golden{
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+    background: linear-gradient(120deg, var(--plum), var(--coral) 60%, var(--gold));
+    padding:28px; margin-top:8px; color:var(--ink);
+  }
+  .golden .time{font-family:'Fraunces',serif; font-size:48px; font-weight:700; color:var(--ink);}
+  .golden .day{font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.08em; text-transform:uppercase;}
+  .golden .note{max-width:320px; font-size:13.5px; font-weight:500;}
+  .clock24{display:flex; height:26px; margin-top:26px; border-radius:4px; overflow:hidden;}
+  .clock24 span{flex:1; background:var(--ink-soft); position:relative;}
+  .clock24 span.peak{background:linear-gradient(180deg,var(--coral),var(--gold));}
+  .clock24 .lbl{display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--bone-dim); margin-top:6px;}
+
+  /* CHANGES */
+  .changes{display:flex; flex-direction:column; gap:16px; margin-top:8px;}
+  .change{display:grid; grid-template-columns:44px 1fr; gap:18px; padding:20px 0; border-top:1px solid var(--line);}
+  .change:first-child{border-top:none;}
+  .change .n{font-family:'Fraunces',serif; font-size:32px; color:var(--coral); font-weight:600;}
+  .change h4{font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px;}
+  .change p{font-size:14px; color:var(--bone-dim);}
+
+  /* HOOKS */
+  .hooks{display:grid; grid-template-columns:1fr; gap:10px; margin-top:8px;}
+  .hook{
+    display:grid; grid-template-columns:34px 1fr; gap:14px;
+    padding:16px 16px 16px 4px; border-bottom:1px dashed var(--line);
+  }
+  .hook .hn{font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:13px; padding-top:2px;}
+  .hook .ht{font-size:15px; font-family:'Fraunces',serif; font-style:italic; font-weight:500;}
+  .hook .htag{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--sage); margin-top:6px; text-transform:uppercase; letter-spacing:.04em;}
+
+  footer{padding:36px 0 10px; color:var(--bone-dim); font-size:12px; font-family:'IBM Plex Mono',monospace;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Content Audit · 7 Hari Terakhir · @alfiani.fk</div>
+    <h1 class="title">Views naik <em>33%</em>, tapi followers malah <em>minus</em>.</h1>
+    <p class="hero-sub">Akunmu lagi ditemukan orang baru tiap hari — algoritma dan search udah kerja. Masalahnya bukan jangkauan, tapi apa yang terjadi 6 detik pertama setelah mereka nonton.</p>
+
+    <div class="tension">
+      <div class="stat"><div class="num up">4.9K</div><div class="label">POST VIEWS (+33.1%)</div></div>
+      <div class="vs">vs</div>
+      <div class="stat"><div class="num down">−2</div><div class="label">NET FOLLOWERS</div></div>
+      <div class="vs">·</div>
+      <div class="stat"><div class="num">6.8–7.5s</div><div class="label">RATA-RATA DITONTON</div></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">00</span><h2>Snapshot minggu ini</h2></div>
+    <div class="metrics">
+      <div class="metric"><div class="v">4.9K</div><div class="l">Post views</div><div class="d up">↑ 33.1%</div></div>
+      <div class="metric"><div class="v">41</div><div class="l">Profile views</div><div class="d up">↑ 24.2%</div></div>
+      <div class="metric"><div class="v">84</div><div class="l">Likes</div><div class="d up">↑ 68%</div></div>
+      <div class="metric"><div class="v">10</div><div class="l">Comments</div><div class="d up">↑ 100%</div></div>
+      <div class="metric"><div class="v">3</div><div class="l">Shares</div><div class="d down">↓ 57.1%</div></div>
+      <div class="metric"><div class="v">3,121</div><div class="l">Total followers</div><div class="d down">−2 net</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Kenapa penonton gak jadi followers</h2></div>
+    <p class="lede">Tiga alasan kelihatan jelas dari datanya — traffic-nya "numpang lewat", bukan yang nyari kamu.</p>
+
+    <div class="bar-row"><div class="bl"><span>For You</span><span>53.6%</span></div><div class="bar-track"><div class="bar-fill" style="width:53.6%"></div></div></div>
+    <div class="bar-row"><div class="bl"><span>Search</span><span>39.0%</span></div><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div></div>
+    <div class="bar-row"><div class="bl"><span>Personal profile (klik ke profil)</span><span>6.7%</span></div><div class="bar-track"><div class="bar-fill" style="width:6.7%"></div></div></div>
+    <div class="bar-row"><div class="bl"><span>Following (dari yang udah follow)</span><span>0.7%</span></div><div class="bar-track"><div class="bar-fill" style="width:0.7%"></div></div></div>
+
+    <div class="callout"><b>Insight 1 — Search membawa "orang random", bukan audiens.</b> Query pencarian yang masuk: "tas berbentuk setengah lingkaran", "bantal aesthetic lucu", "cara pisa uang 154.000", "sabun muka yg cocok untuk beruntusan". Ini pencarian sekali-pakai untuk masalah spesifik — begitu dapat jawabannya, mereka pergi. Cuma 6.7% yang bahkan klik ke profil buat lihat konten lain.</div>
+
+    <div class="callout"><b>Insight 2 — Drop-off di 3 detik pertama.</b> Video 36 detik cuma ditonton rata-rata 6.8 detik (watched full video: 5.71%). Video 48 detik cuma ditonton 7.5 detik (watched full video: 3.52%). Orang berhenti scroll, lihat sekilas, terus lanjut scroll — nggak sempat kenal siapa kamu.</div>
+
+    <div class="callout"><b>Insight 3 — Niche konten belum konsisten.</b> Followers-mu sekarang justru lebih tua (25–44 tahun = 71%) dibanding penonton baru minggu ini (18–34 tahun = 92%, gender 81% perempuan). Kontennya campur: rekomendasi produk, ASMR unboxing, room decor, sampai quote relate jodoh — orang yang nemu satu video nggak tau ini akun tentang apa, jadi nggak ada alasan buat follow.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Konten paling jago — dan kenapa</h2></div>
+    <p class="lede">Top 5 postingan minggu ini didominasi video <b>lama</b> yang balik viral lewat search, bukan video baru.</p>
+
+    <div class="posts">
+      <div class="post"><div class="rk">1</div><div class="cap">Rekomendasi shoulderbag buat ke kondangan<span class="why">Diposting Jul 2023 — masih ditemukan lewat search 2 tahun kemudian</span></div><div class="views">562<small>views</small></div></div>
+      <div class="post"><div class="rk">2</div><div class="cap">Balas komentar: keranjang kuning & kasur busa<span class="why">Format "jawab pertanyaan" — kata kunci jelas, niat orang jelas</span></div><div class="views">468<small>views</small></div></div>
+      <div class="post"><div class="rk">3</div><div class="cap">Baca novel bikin pengen kuliah lagi #room<span class="why">Relate + niche room tetap kepegang</span></div><div class="views">400<small>views</small></div></div>
+      <div class="post"><div class="rk">4</div><div class="cap">Bantal boneka anti gagal #bonekalucu<span class="why">Produk spesifik + hashtag pencarian</span></div><div class="views">345<small>views</small></div></div>
+      <div class="post"><div class="rk">5</div><div class="cap">Beres-beres rumah, caption "deep"<span class="why">Emosional tapi kurang spesifik keyword</span></div><div class="views">266<small>views</small></div></div>
+    </div>
+
+    <div class="compare">
+      <div class="ccard win">
+        <span class="pill win">MENANG</span>
+        <h3>ASMR Unboxing Scoopy Fashion</h3>
+        <div class="stat-line"><span>Views</span><b>669</b></div>
+        <div class="stat-line"><span>Avg watch time</span><b>7.5s</b></div>
+        <div class="stat-line"><span>Likes / Comments</span><b>16 / 2</b></div>
+      </div>
+      <div class="ccard">
+        <span class="pill lose">KALAH</span>
+        <h3>Beres-beres Kamar (personal)</h3>
+        <div class="stat-line"><span>Views</span><b>263</b></div>
+        <div class="stat-line"><span>Avg watch time</span><b>6.8s</b></div>
+        <div class="stat-line"><span>Likes / Comments</span><b>12 / 0</b></div>
+      </div>
+    </div>
+    <div class="callout">Format ASMR unboxing menang 2.5x lipat di views dan retention lebih baik. Kombinasi <b>suara + visual produk + rasa penasaran "isinya apa"</b> jauh lebih kuat sebagai hook dibanding video personal/relate.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Hari & jam terbaik posting</h2></div>
+    <div class="golden">
+      <div>
+        <div class="day">Golden Hour</div>
+        <div class="time">Sabtu, 06:00</div>
+      </div>
+      <div class="note">Followers dan penonton sama-sama paling aktif Sabtu jam 6–7 pagi (puncak 334 followers & 156 penonton aktif jam 6 pagi). Posting jam 4:00–5:30 pagi Sabtu supaya video sudah "matang" tepat di jam ramai.</div>
+    </div>
+    <div class="clock24">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span class="peak"></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="lbl"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>3 hal yang harus diubah sekarang</h2></div>
+    <div class="changes">
+      <div class="change">
+        <div class="n">1</div>
+        <div><h4>Bangun hook 3 detik pertama, bukan intro</h4><p>Rata-rata ditonton cuma 6–7 detik. Buang kalimat pembuka basa-basi — mulai langsung dari visual/pertanyaan yang bikin orang berhenti scroll (contoh di bawah). Target: naikin watched-full-video dari ~4% ke minimal 15%.</p></div>
+      </div>
+      <div class="change">
+        <div class="n">2</div>
+        <div><h4>Pilih 1–2 pilar konten, stop campur</h4><p>Data nunjukin followers turun walau views naik — sinyal audiensmu bingung ini akun tentang apa. Fokus ke 2 format yang udah terbukti: <b>rekomendasi produk/room aesthetic</b> + <b>ASMR unboxing</b>. Konten personal/relate boleh jadi selingan, bukan mayoritas.</p></div>
+      </div>
+      <div class="change">
+        <div class="n">3</div>
+        <div><h4>Tulis caption pakai kata kunci pencarian asli</h4><p>39% traffic dari Search, dan top post justru dari 2023 lewat keyword spesifik ("shoulderbag", "kasur busa"). Selalu sebutkan nama produk + masalah yang dicari orang di caption dan teks-di-video, lalu tutup tiap video dengan CTA "follow buat rekomendasi lainnya" — sekarang hampir gak ada yang klik ke profil (6.7%).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none;">
+    <div class="sec-head"><span class="sec-num">05</span><h2>10 hook script — berdasarkan yang paling works</h2></div>
+    <p class="lede">Ditulis dari 2 pola yang terbukti: <b>ASMR unboxing produk</b> dan <b>rekomendasi/search-driven caption</b>. Ganti [produk] dan [harga] sesuai barang yang mau di-review.</p>
+    <div class="hooks">
+      <div class="hook"><div class="hn">01</div><div><div class="ht">"Ini alasan aku gak nyesel beli [produk] seharga [harga]rb..."</div><div class="htag">product rec · price hook</div></div></div>
+      <div class="hook"><div class="hn">02</div><div><div class="ht">*(langsung buka paket tanpa ngomong)* "ASMR: buka [produk] yang udah aku riset 2 minggu"</div><div class="htag">ASMR unboxing</div></div></div>
+      <div class="hook"><div class="hn">03</div><div><div class="ht">"Balas komen @... ini kak [produk] yang kamu tanya kemarin"</div><div class="htag">reply format · high intent</div></div></div>
+      <div class="hook"><div class="hn">04</div><div><div class="ht">"3 barang di bawah 100rb yang bikin kamar keliatan mahal"</div><div class="htag">listicle · searchable</div></div></div>
+      <div class="hook"><div class="hn">05</div><div><div class="ht">"Jangan beli [produk] sebelum nonton ini"</div><div class="htag">warning hook · curiosity gap</div></div></div>
+      <div class="hook"><div class="hn">06</div><div><div class="ht">"POV: baru gajian, ini yang pertama aku upgrade di kamar"</div><div class="htag">POV relate + product</div></div></div>
+      <div class="hook"><div class="hn">07</div><div><div class="ht">"Kenapa kamar aku selalu berantakan? Ternyata ini penyebabnya"</div><div class="htag">curiosity gap</div></div></div>
+      <div class="hook"><div class="hn">08</div><div><div class="ht">"Rekomendasi [kategori produk] buat kondangan, harga di bawah [harga]"</div><div class="htag">search keyword-driven</div></div></div>
+      <div class="hook"><div class="hn">09</div><div><div class="ht">*(suara buka plastik/box dulu)* "Sound-nya aja udah bikin nagih"</div><div class="htag">ASMR unboxing</div></div></div>
+      <div class="hook"><div class="hn">10</div><div><div class="ht">"Cara beres-beres kamar 10 menit ala orang males"</div><div class="htag">relate + searchable</div></div></div>
+    </div>
+  </section>
+
+  <footer>Sumber data: TikTok Analytics screenshot 7 hari (1–7 Agu) & Video Analysis 2 video terbaru · Disusun manual dari data yang kamu upload, bukan dari API TikTok.</footer>
+</div>
+</body>
+</html>

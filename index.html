@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfiani Fitria Kusnadi ✨ | Penulis Naskah, Creator & Vibe Coder</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelCream: '#FDFBF7',
+                        pastelRose: '#E8C5C8',
+                        pastelSage: '#D8E2DC',
+                        pastelMocha: '#B08968',
+                        pastelBrown: '#4A3B32',
+                        pastelPeach: '#F3C68F',
+                        pastelPinkCard: '#FFF0F3',
+                        pastelGreenCard: '#F4F9F4',
+                        pastelYellowCard: '#FCF8E8',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Quicksand', 'sans-serif'],
+                        handwriting: ['Quicksand', 'cursive', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Poppins & Quicksand -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFBF7;
+            color: #4A3B32;
+        }
+
+        .heading-font {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* Cute Polaroid Sticker Shadow Effect */
+        .polaroid-card {
+            background: #ffffff;
+            border: 2px solid #E8C5C8;
+            box-shadow: 6px 6px 0px #E8C5C8;
+            transition: all 0.2s ease-in-out;
+        }
+        .polaroid-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 8px 10px 0px #B08968;
+        }
+
+        .sticky-note-pink {
+            background-color: #FFF0F3;
+            border: 2px dashed #E8C5C8;
+        }
+
+        .sticky-note-green {
+            background-color: #F4F9F4;
+            border: 2px dashed #D8E2DC;
+        }
+
+        .sticky-note-yellow {
+            background-color: #FCF8E8;
+            border: 2px dashed #F3C68F;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDFBF7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E8C5C8;
+            border-radius: 4px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .floating-element {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="selection:bg-pastelRose selection:text-pastelBrown">
+
+    <!-- Navbar / Header Menu -->
+    <header class="sticky top-0 z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#E8C5C8]/40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand -->
+            <a href="#" class="flex items-center space-x-2 group">
+                <span class="w-10 h-10 rounded-full bg-pastelRose flex items-center justify-center text-pastelBrown font-bold text-lg shadow-sm group-hover:rotate-12 transition-transform">
+                    A
+                </span>
+                <div>
+                    <h1 class="heading-font font-bold text-lg text-pastelBrown tracking-wide">Alfiani Fitria K.</h1>
+                    <p class="text-[11px] text-[#B08968] font-medium">@alfiani.fk • Lo-fi Vibe</p>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <a href="#about" class="hover:text-pastelMocha transition-colors">✨ Tentang</a>
+                <a href="#portfolio" class="hover:text-pastelMocha transition-colors">📁 Karya & Skrip</a>
+                <a href="#vibe-terminal" class="hover:text-pastelMocha transition-colors">💻 Vibe Coder</a>
+                <a href="#coffee-corner" class="hover:text-pastelMocha transition-colors">☕ Coffee Corner</a>
+                <a href="#contact" class="px-4 py-2 rounded-full bg-pastelRose text-pastelBrown font-semibold shadow-sm hover:bg-[#dfb4b7] transition-all">
+                    Hubungi Aku 💌
+                </a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="p-2 text-pastelBrown focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-pastelCream border-b border-[#E8C5C8] px-6 py-4 space-y-3">
+            <a href="#about" class="block text-sm font-medium py-1">✨ Tentang</a>
+            <a href="#portfolio" class="block text-sm font-medium py-1">📁 Karya & Skrip</a>
+            <a href="#vibe-terminal" class="block text-sm font-medium py-1">💻 Vibe Coder</a>
+            <a href="#coffee-corner" class="block text-sm font-medium py-1">☕ Coffee Corner</a>
+            <a href="#contact" class="block text-center py-2 rounded-full bg-pastelRose text-pastelBrown font-semibold text-sm">Hubungi Aku 💌</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="about" class="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+            
+            <!-- Left Bio / Introduction -->
+            <div class="md:col-span-7 space-y-6 text-center md:text-left">
+                <!-- Cute badge -->
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-pastelSage/60 border border-pastelSage text-pastelBrown text-xs font-medium">
+                    <span>☕ Secangkir kopi hangat & naskah cerita siap menanti</span>
+                </div>
+
+                <h2 class="heading-font text-4xl sm:text-5xl font-extxl font-bold text-pastelBrown leading-tight">
+                    Hai, aku <span class="text-[#B08968] underline decoration-pastelRose decoration-wavy">Alfiani!</span> ✨
+                </h2>
+
+                <p class="text-base sm:text-lg text-stone-700 leading-relaxed font-normal">
+                    Seorang <strong class="text-pastelBrown font-semibold">Penulis Naskah</strong> yang suka merangkai alur cerita bermakna, <strong class="text-pastelBrown font-semibold">Content Creator</strong> yang membagikan momen kreatif, dan seorang <strong class="text-pastelBrown font-semibold">Vibe Coder</strong> yang meracik kode web dengan energi santai ditemani alunan musik lo-fi.
+                </p>
+
+                <!-- 3 Role Pills -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
+                    <span class="px-3.5 py-2 rounded-xl sticky-note-pink text-xs font-semibold text-pastelBrown shadow-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-feather text-rose-400"></i> Penulis Naskah ✍️
+                    </span>
+                    <span class="px-3.5 py-2 rounded-xl sticky-note-green text-xs font-semibold text-pastelBrown shadow-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-clapperboard text-emerald-600"></i> Content Creator 🎬
+                    </span>
+                    <span class="px-3.5 py-2 rounded-xl sticky-note-yellow text-xs font-semibold text-pastelBrown shadow-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-laptop-code text-amber-600"></i> Vibe Coder 💻✨
+                    </span>
+                </div>
+
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+                    <a href="#portfolio" class="w-full sm:w-auto px-6 py-3 rounded-full bg-pastelBrown text-pastelCream font-semibold text-sm hover:bg-[#604c41] transition-all shadow-md text-center">
+                        Jelajahi Portofolio 🌷
+                    </a>
+                    <a href="https://www.instagram.com/alfiani.fk/" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-full bg-white border-2 border-pastelRose text-pastelBrown font-semibold text-sm hover:bg-pastelRose/20 transition-all text-center flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-instagram text-rose-500 text-lg"></i> @alfiani.fk
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Cute Illustration / Polaroid Avatar Card -->
+            <div class="md:col-span-5 flex justify-center">
+                <div class="relative w-72 sm:w-80 p-4 polaroid-card rounded-2xl floating-element">
+                    <!-- Image / Sticker placeholder -->
+                    <div class="w-full h-72 rounded-xl bg-gradient-to-br from-pastelRose/40 via-pastelSage/30 to-pastelPeach/40 flex flex-col items-center justify-center p-6 text-center border border-[#E8C5C8]/60 relative overflow-hidden">
+                        <!-- Decorative sticker icon -->
+                        <div class="absolute top-3 right-3 bg-white/80 p-2 rounded-full shadow-xs text-xs">
+                            🌸
+                        </div>
+                        <div class="absolute bottom-3 left-3 bg-white/80 px-2.5 py-1 rounded-full shadow-xs text-[10px] font-mono text-stone-600">
+                            ☕ Lo-fi Mode: ON
+                        </div>
+
+                        <!-- Avatar icon / Illustration -->
+                        <div class="w-28 h-28 rounded-full bg-white shadow-md flex items-center justify-center mb-4 border-2 border-pastelRose">
+                            <i class="fa-solid fa-user-pen text-4xl text-[#B08968]"></i>
+                        </div>
+                        <h3 class="heading-font font-bold text-lg text-pastelBrown">Alfiani Fitria Kusnadi</h3>
+                        <p class="text-xs text-stone-600 mt-1">"Dimana setiap cerita punya detak jantungnya sendiri."</p>
+                    </div>
+
+                    <!-- Polaroid Caption -->
+                    <div class="pt-4 text-center">
+                        <p class="heading-font text-sm font-bold text-stone-700">📌 My Cozy Creative Space</p>
+                        <p class="text-[11px] text-stone-500">Writing • Creating • Coding</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Portfolio & Works Section -->
+    <section id="portfolio" class="py-20 bg-white/60 border-t border-b border-[#E8C5C8]/30">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-semibold text-[#B08968] uppercase tracking-widest bg-pastelRose/30 px-3 py-1 rounded-full">
+                    // Galeri Karya & Proyek
+                </span>
+                <h3 class="heading-font text-3xl sm:text-4xl font-bold text-pastelBrown mt-3">
+                    Ruang Kreatif & Portofolio
+                </h3>
+                <p class="text-stone-600 text-sm mt-2">
+                    Pilih kategori di bawah untuk melihat cuplikan naskah, reels, atau web app buatan Alfiani.
+                </p>
+
+                <!-- Filter Buttons -->
+                <div id="filter-tabs" class="flex flex-wrap justify-center gap-2.5 mt-8">
+                    <button onclick="filterPortfolio('all')" class="filter-btn active-tab px-4 py-2 rounded-full text-xs font-semibold bg-pastelBrown text-pastelCream transition-all shadow-xs">
+                        ✨ Semua Karya
+                    </button>
+                    <button onclick="filterPortfolio('script')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-pastelRose/40 text-pastelBrown hover:bg-pastelRose transition-all shadow-xs">
+                        📝 Penulis Naskah
+                    </button>
+                    <button onclick="filterPortfolio('content')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-pastelSage text-pastelBrown hover:bg-[#c2d3cb] transition-all shadow-xs">
+                        🎬 Content Creator
+                    </button>
+                    <button onclick="filterPortfolio('coding')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-pastelPeach/60 text-pastelBrown hover:bg-pastelPeach transition-all shadow-xs">
+                        💻 Vibe Coder
+                    </button>
+                </div>
+            </div>
+
+            <!-- Portfolio Cards Grid -->
+            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Penulis Naskah (Script Recap) -->
+                <div class="portfolio-item script polaroid-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold sticky-note-pink text-pastelBrown">
+                                ✍️ Naskah Recap
+                            </span>
+                            <span class="text-xs text-stone-400 font-mono">01</span>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-pastelBrown mb-2">
+                            Skrip Alur Cerita: "Dimana Waktu Berhenti"
+                        </h4>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+                            Naskah video recap dengan pacing emosional yang kuat, menggunakan ciri khas narasi interaktif 'dimana' untuk memikat penonton.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Script Snippet Dropdown -->
+                    <div class="border-t border-stone-100 pt-3">
+                        <button onclick="toggleScriptSnippet('script-snippet-1')" class="w-full py-2 rounded-xl bg-pastelRose/20 text-pastelBrown text-xs font-semibold hover:bg-pastelRose/40 transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-book-open-reader"></i> Baca Cuplikan Skrip
+                        </button>
+                        <div id="script-snippet-1" class="hidden mt-3 p-3 rounded-lg bg-stone-50 border border-stone-200 text-[11px] font-mono text-stone-700 space-y-2">
+                            <p class="text-rose-600 font-semibold">[VO NARRATOR]:</p>
+                            <p>"Di sudut kota tua itu, dimana lampu jalan tidak pernah menyala lebih dari jam 10 malam, rahasia masa lalu mulai terungkap..."</p>
+                            <p class="text-[10px] text-stone-400 text-right">- Alfiani Script Draft</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Content Creator -->
+                <div class="portfolio-item content polaroid-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold sticky-note-green text-pastelBrown">
+                                🎬 Creator Reels
+                            </span>
+                            <span class="text-xs text-stone-400 font-mono">02</span>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-pastelBrown mb-2">
+                            Series: "Cerita di Balik Meja Belajar"
+                        </h4>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+                            Konten video pendek Instagram Reels & TikTok tentang rutinitas produktif, tips menulis naskah, dan hobi santai.
+                        </p>
+                    </div>
+                    <div class="border-t border-stone-100 pt-3">
+                        <a href="https://www.instagram.com/alfiani.fk/" target="_blank" class="w-full py-2 rounded-xl bg-pastelSage/50 text-pastelBrown text-xs font-semibold hover:bg-pastelSage transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-instagram text-rose-500"></i> Tonton di Instagram
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Vibe Coder -->
+                <div class="portfolio-item coding polaroid-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold sticky-note-yellow text-pastelBrown">
+                                💻 Vibe Coding
+                            </span>
+                            <span class="text-xs text-stone-400 font-mono">03</span>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-pastelBrown mb-2">
+                            Cozy Script Prompter & Timer
+                        </h4>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+                            Aplikasi web mini untuk menghitung durasi baca naskah recap per menit dengan tema pastel lo-fi yang menenangkan.
+                        </p>
+                    </div>
+                    <div class="border-t border-stone-100 pt-3">
+                        <a href="#vibe-terminal" class="w-full py-2 rounded-xl bg-pastelPeach/40 text-pastelBrown text-xs font-semibold hover:bg-pastelPeach transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-terminal"></i> Buka Vibe Terminal
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Penulis Naskah (Mystery Story) -->
+                <div class="portfolio-item script polaroid-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold sticky-note-pink text-pastelBrown">
+                                ✍️ Naskah Misteri
+                            </span>
+                            <span class="text-xs text-stone-400 font-mono">04</span>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-pastelBrown mb-2">
+                            Skrip Alur Cerita: "Surat dari Masa Lalu"
+                        </h4>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+                            Penyusunan naskah cerita fiksi misteri yang berfokus pada ketegangan psikologis dan emosi karakter utama.
+                        </p>
+                    </div>
+                    <div class="border-t border-stone-100 pt-3">
+                        <button onclick="toggleScriptSnippet('script-snippet-2')" class="w-full py-2 rounded-xl bg-pastelRose/20 text-pastelBrown text-xs font-semibold hover:bg-pastelRose/40 transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-book-open-reader"></i> Baca Cuplikan Skrip
+                        </button>
+                        <div id="script-snippet-2" class="hidden mt-3 p-3 rounded-lg bg-stone-50 border border-stone-200 text-[11px] font-mono text-stone-700 space-y-2">
+                            <p class="text-rose-600 font-semibold">[VO NARRATOR]:</p>
+                            <p>"Ada kalanya amplop surat tua datang di saat yang paling tidak terduga, membawa kembali kenangan dimana kita pernah berjanji untuk tidak saling melupakan..."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Vibe Coder (Portfolio App) -->
+                <div class="portfolio-item coding polaroid-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold sticky-note-yellow text-pastelBrown">
+                                💻 Vibe Coding
+                            </span>
+                            <span class="text-xs text-stone-400 font-mono">05</span>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-pastelBrown mb-2">
+                            Lo-fi Pastel Portfolio Web App
+                        </h4>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+                            Pembuatan web interaktif dengan single-file HTML & Tailwind CSS bertemakan cozy pastel, dikerjakan dengan penuh cinta.
+                        </p>
+                    </div>
+                    <div class="border-t border-stone-100 pt-3">
+                        <a href="#about" class="w-full py-2 rounded-xl bg-pastelPeach/40 text-pastelBrown text-xs font-semibold hover:bg-pastelPeach transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-heart text-rose-500"></i> Lihat Detail Halaman
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 6: Content Creator Tips -->
+                <div class="portfolio-item content polaroid-card p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold sticky-note-green text-pastelBrown">
+                                🎬 Creator Tips
+                            </span>
+                            <span class="text-xs text-stone-400 font-mono">06</span>
+                        </div>
+                        <h4 class="heading-font font-bold text-lg text-pastelBrown mb-2">
+                            Tips Content Writing & Hook 3 Detik
+                        </h4>
+                        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+                            Kumpulan infografis dan tips praktis seputar cara membangun hook video yang kuat agar penonton betah menonton.
+                        </p>
+                    </div>
+                    <div class="border-t border-stone-100 pt-3">
+                        <a href="https://www.instagram.com/alfiani.fk/" target="_blank" class="w-full py-2 rounded-xl bg-pastelSage/50 text-pastelBrown text-xs font-semibold hover:bg-pastelSage transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-instagram text-rose-500"></i> Kunjungi Instagram
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Vibe Coder Terminal Section -->
+    <section id="vibe-terminal" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <span class="text-xs font-semibold text-amber-700 bg-pastelPeach/50 px-3 py-1 rounded-full">
+                💻 Vibe Coder Playground
+            </span>
+            <h3 class="heading-font text-3xl font-bold text-pastelBrown mt-2">
+                Terminal Vibe Santai
+            </h3>
+            <p class="text-stone-600 text-sm mt-1">
+                Ketik atau klik perintah di bawah untuk melihat pesan-pesan motivasi dev dan cuplikan kode lo-fi buatan Alfiani.
+            </p>
+        </div>
+
+        <!-- Terminal Box -->
+        <div class="rounded-2xl bg-[#2D2420] text-[#FDFBF7] shadow-xl border-4 border-[#B08968] overflow-hidden font-mono text-xs sm:text-sm">
+            <!-- Terminal Header -->
+            <div class="bg-[#3D312C] px-4 py-3 flex items-center justify-between border-b border-[#52433D]">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-400 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                    <span class="text-xs text-stone-300 ml-2">alfiani@vibe-laptop:~ (lo-fi mode)</span>
+                </div>
+                <div class="text-[11px] text-amber-300/80">
+                    ☕ Status: Ngoding Sambil Ngopi
+                </div>
+            </div>
+
+            <!-- Terminal Output Area -->
+            <div id="terminal-screen" class="p-5 h-64 overflow-y-auto space-y-3 text-stone-200">
+                <div>
+                    <span class="text-rose-300">alfiani@vibe</span>:<span class="text-amber-300">~</span>$ <span class="text-emerald-300">help</span>
+                </div>
+                <div class="text-stone-400 text-xs pl-2 border-l-2 border-stone-600">
+                    Halo! Selamat datang di terminal Vibe Coder. Pilih tombol perintah di bawah untuk mencoba interaksi terminal.
+                </div>
+            </div>
+
+            <!-- Terminal Actions / Buttons -->
+            <div class="p-3 bg-[#3D312C] border-t border-[#52433D] flex flex-wrap gap-2">
+                <button onclick="runVibeCommand('motivation')" class="px-3 py-1.5 rounded-lg bg-[#52433D] hover:bg-[#68564E] text-amber-200 text-xs transition-colors">
+                    ✨ Kata Hari Ini
+                </button>
+                <button onclick="runVibeCommand('code')" class="px-3 py-1.5 rounded-lg bg-[#52433D] hover:bg-[#68564E] text-rose-200 text-xs transition-colors">
+                    💻 Vibe Code Snippet
+                </button>
+                <button onclick="runVibeCommand('coffee')" class="px-3 py-1.5 rounded-lg bg-[#52433D] hover:bg-[#68564E] text-emerald-200 text-xs transition-colors">
+                    ☕ Status Kopi
+                </button>
+                <button onclick="runVibeCommand('clear')" class="px-3 py-1.5 rounded-lg bg-[#2D2420] text-stone-400 hover:text-white text-xs ml-auto transition-colors">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coffee & Vibe Corner Widget Section -->
+    <section id="coffee-corner" class="py-16 bg-white/40 border-t border-b border-[#E8C5C8]/30">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="polaroid-card p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-pastelCream via-[#FFF7F0] to-[#F4F9F4] grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                
+                <div class="md:col-span-5 text-center md:text-left space-y-3">
+                    <span class="text-xs font-semibold text-amber-700 bg-pastelPeach px-3 py-1 rounded-full inline-block">
+                        ☕ Coffee Corner
+                    </span>
+                    <h3 class="heading-font text-2xl font-bold text-pastelBrown">
+                        Current Vibe & Mood
+                    </h3>
+                    <p class="text-xs text-stone-600 leading-relaxed">
+                        Saat sedang menulis naskah atau meracik kode web, suasana hati yang tenang dan ditemani minuman favorit adalah kuncinya.
+                    </p>
+                </div>
+
+                <div class="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-white border border-[#E8C5C8] shadow-xs space-y-1">
+                        <div class="flex items-center space-x-2 text-pastelBrown font-semibold text-sm">
+                            <span>🎵</span>
+                            <span>Lagi Dengerin Apa?</span>
+                        </div>
+                        <p class="text-xs text-stone-600">Lo-fi Hip Hop Beats to Write & Code To</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white border border-[#E8C5C8] shadow-xs space-y-1">
+                        <div class="flex items-center space-x-2 text-pastelBrown font-semibold text-sm">
+                            <span>☕</span>
+                            <span>Minuman Favorit</span>
+                        </div>
+                        <p class="text-xs text-stone-600">Iced Latte / Warm Matcha Latte</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white border border-[#E8C5C8] shadow-xs space-y-1">
+                        <div class="flex items-center space-x-2 text-pastelBrown font-semibold text-sm">
+                            <span>📚</span>
+                            <span>Fokus Utama</span>
+                        </div>
+                        <p class="text-xs text-stone-600">Naskah Video & Frontend Vibe Coding</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white border border-[#E8C5C8] shadow-xs space-y-1">
+                        <div class="flex items-center space-x-2 text-pastelBrown font-semibold text-sm">
+                            <span>✨</span>
+                            <span>Status</span>
+                        </div>
+                        <p class="text-xs text-emerald-600 font-medium">Terbuka untuk Kolaborasi & Proyek</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Socials & Contact Section -->
+    <section id="contact" class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="text-xs font-semibold text-[#B08968] uppercase tracking-widest bg-pastelRose/30 px-3 py-1 rounded-full">
+            💌 Mari Terhubung
+        </span>
+        <h3 class="heading-font text-3xl font-bold text-pastelBrown mt-3">
+            Kirim Pesan atau Sapa Alfiani
+        </h3>
+        <p class="text-stone-600 text-sm max-w-md mx-auto mt-2">
+            Punya penawaran kolaborasi penulisan naskah, projek konten, atau sekadar ingin menyapa? Jangan ragu untuk menghubungi lewat tautan di bawah ya!
+        </p>
+
+        <!-- Cute Sticker Social Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mt-8">
+            <a href="https://www.instagram.com/alfiani.fk/" target="_blank" class="px-6 py-3 rounded-2xl polaroid-card bg-white hover:bg-pastelRose/10 text-pastelBrown font-semibold text-sm flex items-center gap-2.5 transition-all">
+                <i class="fa-brands fa-instagram text-rose-500 text-xl"></i>
+                <span>Instagram (@alfiani.fk)</span>
+            </a>
+
+            <a href="mailto:alfiani.fitria.kusnadi@gmail.com" class="px-6 py-3 rounded-2xl polaroid-card bg-white hover:bg-pastelSage/20 text-pastelBrown font-semibold text-sm flex items-center gap-2.5 transition-all">
+                <i class="fa-solid fa-envelope text-amber-600 text-xl"></i>
+                <span>Email Resmi</span>
+            </a>
+
+            <a href="https://wa.me/" target="_blank" class="px-6 py-3 rounded-2xl polaroid-card bg-white hover:bg-pastelPeach/20 text-pastelBrown font-semibold text-sm flex items-center gap-2.5 transition-all">
+                <i class="fa-brands fa-whatsapp text-emerald-600 text-xl"></i>
+                <span>WhatsApp / Chat</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-pastelBrown text-pastelCream text-center text-xs">
+        <div class="max-w-6xl mx-auto px-4 space-y-2">
+            <p>© <span id="current-year"></span> Alfiani Fitria Kusnadi. Dibuat dengan cinta, kopi hangat, dan vibe lo-fi pastel.</p>
+            <p class="text-[#E8C5C8] text-[11px]">Penulis Naskah ✍️ | Content Creator 🎬 | Vibe Coder 💻✨</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Portfolio Filtering Function
+        function filterPortfolio(category) {
+            const items = document.querySelectorAll('.portfolio-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update button active styles
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-pastelBrown', 'text-pastelCream');
+                btn.classList.add('bg-stone-100', 'text-pastelBrown');
+            });
+            event.target.classList.remove('bg-stone-100');
+            event.target.classList.add('bg-pastelBrown', 'text-pastelCream');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle Script Snippet
+        function toggleScriptSnippet(id) {
+            const snippet = document.getElementById(id);
+            if (snippet.classList.contains('hidden')) {
+                snippet.classList.remove('hidden');
+            } else {
+                snippet.classList.add('hidden');
+            }
+        }
+
+        // Vibe Terminal Interactive Simulation
+        const terminalScreen = document.getElementById('terminal-screen');
+        function runVibeCommand(cmd) {
+            let outputHTML = '';
+
+            if (cmd === 'clear') {
+                terminalScreen.innerHTML = `<div><span class="text-rose-300">alfiani@vibe</span>:<span class="text-amber-300">~</span>$ Terminal dibersihkan.</div>`;
+                return;
+            }
+
+            if (cmd === 'motivation') {
+                outputHTML = `
+                    <div><span class="text-rose-300">alfiani@vibe</span>:<span class="text-amber-300">~</span>$ run quote.sh</div>
+                    <div class="text-amber-200 text-xs pl-3 border-l-2 border-amber-400 my-1">
+                        ✨ "Menulis naskah itu seperti merajut benang waktu, sedangkan ngoding adalah cara kita memberi rumah pada ide-ide tersebut." - Alfiani Fitria
+                    </div>
+                `;
+            } else if (cmd === 'code') {
+                outputHTML = `
+                    <div><span class="text-rose-300">alfiani@vibe</span>:<span class="text-amber-300">~</span>$ cat cozy_vibe.js</div>
+                    <div class="text-emerald-300 text-xs pl-3 border-l-2 border-emerald-400 my-1 font-mono">
+                        const alfianiVibe = {<br>
+                        &nbsp;&nbsp;role: "Penulis Naskah & Vibe Coder",<br>
+                        &nbsp;&nbsp;coffee: "Matcha Latte",<br>
+                        &nbsp;&nbsp;status: "Ready to create amazing stories!"<br>
+                        };<br>
+                        console.log("Welcome to my cozy world!");
+                    </div>
+                `;
+            } else if (cmd === 'coffee') {
+                outputHTML = `
+                    <div><span class="text-rose-300">alfiani@vibe</span>:<span class="text-amber-300">~</span>$ check coffee-status</div>
+                    <div class="text-rose-300 text-xs pl-3 border-l-2 border-rose-400 my-1">
+                        ☕ Kopi tersisa: 85% | Suasana hati: Tenang & produktif sambil dengerin lo-fi beats.
+                    </div>
+                `;
+            }
+
+            terminalScreen.innerHTML += outputHTML;
+            terminalScreen.scrollTop = terminalScreen.scrollHeight;
+        }
+    </script>
+</body>
+</html>

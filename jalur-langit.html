@@ -105,19 +105,31 @@ textarea:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(27
 .cpy{border:1px solid var(--bd);background:var(--glass);color:var(--gold);border-radius:8px;padding:4px 10px;font:600 12px inherit;font-family:inherit;cursor:pointer;flex:none}
 .sh button small{opacity:.9}
 main{padding-top:calc(22px + var(--bnp,0px));transition:padding .3s}
+.ghj{font-size:14px;line-height:1.5;font-style:italic;margin:2px 0 8px;cursor:pointer}
+.cbx{width:30px;height:30px;border-radius:10px;border:1.5px solid rgba(255,255,255,.95);background:rgba(255,255,255,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer;display:grid;place-items:center;flex:none;transition:.3s;padding:0;box-shadow:inset 0 1px 0 #fff}
+.cbx svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .35s .05s}
+.cbx.on{background:linear-gradient(135deg,#F3C649,#2FB59A);border-color:transparent;box-shadow:0 0 18px rgba(243,198,73,.7)}.cbx.on svg{stroke-dashoffset:0}
+.row .rip{right:11px}.row .pt{right:19px}
+.pq{margin-top:12px;padding-top:12px;border-top:1px solid rgba(15,58,77,.1)}.pq .t{font-size:14px;margin-bottom:8px}
+.toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:130;max-width:90%;text-align:center;padding:12px 18px;border-radius:20px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border:1px solid rgba(229,193,88,.85);box-shadow:0 10px 36px rgba(20,90,130,.25),0 0 22px rgba(243,198,73,.45);font-weight:700;font-size:14px;animation:tst 2.7s ease forwards}
+@keyframes tst{0%{opacity:0;transform:translate(-50%,16px) scale(.9)}12%{opacity:1;transform:translate(-50%,0) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-8px)}}
+.bnw{position:fixed;inset:0;z-index:95;align-items:center;justify-content:center;padding:16px;background:rgba(15,58,77,.3);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.bnc{width:100%;max-width:380px;text-align:center;padding:24px 20px 18px;border-radius:32px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(30px) saturate(160%);backdrop-filter:blur(30px) saturate(160%);border:1px solid rgba(229,193,88,.85);box-shadow:0 20px 60px rgba(20,90,130,.35),0 0 34px rgba(243,198,73,.5),inset 0 1px 0 #fff;animation:pop2 .45s cubic-bezier(.3,1.4,.5,1)}
+@keyframes pop2{from{opacity:0;transform:scale(.85)}}
+.dl{display:flex;justify-content:space-between;gap:8px;font-size:12px;padding:6px 0;border-top:1px solid rgba(15,58,77,.1)}.dl b{color:var(--gold);text-align:right}
+.pstrip{display:flex;gap:3px;margin-top:10px;flex-wrap:wrap}.pstrip i{width:14px;height:14px;border-radius:4px;background:rgba(15,58,77,.08);border:1px solid rgba(255,255,255,.8)}.pstrip i.q{background:#1479B3}.pstrip i.s{background:#F3C649}.pstrip i.t{background:rgba(15,58,77,.28)}
 </style></head><body>
 <div id="ld"><div class="ldg"></div><div class="ldc"><svg class="cres" viewBox="0 0 100 100"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBE08A"/><stop offset="1" stop-color="#E0AE2F"/></linearGradient><mask id="cm"><rect width="100" height="100" fill="#fff"/><circle cx="62" cy="42" r="30" fill="#000"/></mask></defs><circle cx="50" cy="52" r="36" fill="url(#gg)" mask="url(#cm)"/><path d="M72 22l2.6 6.2 6.6.5-5 4.4 1.6 6.5-5.8-3.5-5.8 3.5 1.6-6.5-5-4.4 6.6-.5z" fill="url(#gg)"/></svg><div class="ldt" id="ldt">Membuka Pintu Langit…</div><div class="ldb"><i id="ldp"></i></div><div class="ldn" id="ldn">0%</div><div class="ldw">⚠️ Jangan membuka aplikasi ini di WC, toilet, atau tempat yang dilarang membuka Kalamullah.</div></div></div>
 <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
 <main>
 <section class="tab on" id="t0">
 <div class="hdr"><button class="btn" id="abtn" style="display:none;float:right;margin:0">Masuk</button><h1>Jalur Langit</h1><p class="sub" id="greet"></p></div>
-<div class="card" id="gcard"><div class="ar2">Assalamu’alaikum,</div><div id="gname" style="font-size:26px;font-weight:700;margin:2px 0 6px"></div><button class="lk" id="gedit" style="float:none;padding:0">✎ ubah nama</button></div>
+<div class="card" id="gcard"><div class="ar2">Assalamu’alaikum,</div><div id="gname" style="font-size:26px;font-weight:700;margin:2px 0 4px"></div><div id="ghj" class="ghj"></div><button class="lk" id="gedit" style="float:none;padding:0">✎ ubah nama</button></div>
 <div class="card"><h2>Waktu Sholat</h2><div style="text-align:center"><div class="ar2" id="pnext">Menuju …</div><div id="pcd" style="font-size:40px;font-weight:700;color:var(--gold);letter-spacing:1px">00:00:00</div></div><div class="pt5" id="ptimes"></div><div class="ar2" style="margin-top:12px" id="ploc"></div><div class="ar2" id="pdate"></div><button class="lk" id="ploc2" style="float:none;padding:0;margin-top:4px">↻ Perbarui lokasi</button><div class="fn">Perkiraan (sudut Subuh 20°, Isya 18°), bisa selisih 1–3 menit dari jadwal masjid.</div></div>
 <div class="menu" id="menu"><button class="tile" data-go="1"><span>🤲</span><b>Doa</b></button><button class="tile" data-go="4"><span>📿</span><b>Dzikir</b></button><button class="tile" data-go="2"><span>✨</span><b>Asmaul Husna</b></button><button class="tile" data-go="3"><span>📖</span><b>Surat</b></button><button class="tile" data-go="6"><span>📜</span><b>Wirid</b></button><button class="tile" data-go="5"><span>🕌</span><b>Tata Cara Sholat</b></button><button class="tile w3" data-go="7"><span>📊</span><b>Rekap Ibadah</b></button><button class="tile w3" data-go="8"><span>⚙️</span><b>Pengaturan</b></button></div>
 <div class="card"><h2>Konsistensi 7 Hari</h2><div id="cons"></div></div>
-<div class="card"><h2>Hajat Utama</h2><textarea id="hajat" rows="2" placeholder="Apa yang sedang kamu perjuangkan dan kamu rayu kepada Allah?"></textarea><div style="margin-top:8px;text-align:right"><button class="btn" id="sh">Simpan hajat</button></div></div>
-<div class="card"><h2>Rayuan Hari Ini</h2><div id="amal"></div></div>
-<div class="card"><h2>Sholat 5 Waktu</h2><div class="sh" id="sholat"></div><div class="bar"><i id="pbS"></i></div><div class="ar2" id="ptS"></div></div>
+<div class="card"><h2>Rayuan Hari Ini</h2><div id="amal"></div><div class="pq"><div class="t">Apakah hari ini kamu menjalani puasa Qadha atau Sunnah?</div><div class="dch" id="pz" style="justify-content:flex-start;margin:0 0 6px"><button data-v="q">Puasa Qadha</button><button data-v="s">Puasa Sunnah</button><button data-v="t">Tidak Puasa</button></div><div class="fn" id="pzn" style="margin:0"></div></div></div>
+<div class="card"><h2>Sholat 5 Waktu</h2><div class="sh" id="sholat"></div><div class="bar"><i id="pbS"></i></div><div class="ar2" id="ptS"></div><div id="ptD" style="margin-top:6px"></div></div>
 <div class="card"><h2>Kalender &amp; Puasa Sunnah</h2><div class="calh"><button class="cbtn" id="calp" aria-label="Bulan sebelumnya">‹</button><div style="text-align:center"><b id="caln"></b><div class="ar2" id="calh"></div></div><button class="cbtn" id="caln2" aria-label="Bulan berikutnya">›</button></div><div class="calw"><span>Ahd</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span></div><div class="calg" id="calg"></div><div class="fn" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px"><span><i class="lgi f2"></i>Puasa sunnah khusus</span><span><i class="lgi f1"></i>Syawal</span><span><i class="lgi f0"></i>Senin/Kamis</span></div><div class="fn">Ketuk tanggal untuk melihat niat dan keutamaannya.</div></div>
 <div class="card"><h2>Menuju Ramadan 1448 H &amp; Pelacak Qadha</h2><div class="cd"><div><b id="cdd">0</b><span>hari</span></div><div><b id="cdh">0</b><span>jam</span></div><div><b id="cdm">0</b><span>menit</span></div><div><b id="cds">0</b><span>detik</span></div></div><div class="fn" style="text-align:center">Perkiraan awal Ramadan: 8 Februari 2027 (menunggu sidang isbat)</div><div style="border-top:1px solid rgba(15,58,77,.1);margin:14px 0 12px"></div><div class="qty"><div><div class="n" id="qt"></div><div class="ar2">hutang puasa terbayar</div></div><div class="cb"><button id="qm">−</button><button id="qp">+</button></div></div><div class="bar"><i id="pbQ"></i></div><button class="lk" id="qset" style="float:none">Atur total hutang</button></div>
 <div class="card"><h2>Surat Kecil untuk Allah</h2><div class="dch" id="pvc" style="justify-content:flex-start;margin-top:0"><button class="on" data-p="0">🔒 Privat</button><button data-p="1">🌍 Publik</button></div><textarea id="srt" rows="4" placeholder="Tulis curhat dan doamu di sini."></textarea><label id="anl" style="display:none;font-size:12px;color:var(--mut);margin-top:8px"><input type="checkbox" id="anon"> Tampilkan sebagai “Hamba Allah”</label><div class="ar2" id="pvh" style="margin-top:8px">Privat: hanya kamu yang bisa membacanya.</div><div style="margin-top:8px;text-align:right"><button class="btn" id="ks">Kirim ke langit</button></div><div id="sl"></div></div>
@@ -140,7 +152,7 @@ main{padding-top:calc(22px + var(--bnp,0px));transition:padding .3s}
 <section class="tab" id="t8"><div class="hdr"><button class="btn" id="slb4" style="float:right;margin:0">← Beranda</button><h1>Pengaturan</h1><p class="sub">Target ibadah dan preferensi</p></div><div id="stc"></div></section>
 </main>
 <div class="sheet" id="psheet"><div class="card" id="pc" style="text-align:left"></div></div>
-<div id="bn" class="bn" style="display:none"></div>
+<div id="bn" class="bnw" style="display:none"></div>
 <div class="sheet" id="sheet"><div class="card" id="sc"></div></div>
 <div class="sheet" id="asheet" style="align-items:center"><div class="card" id="acc" style="width:calc(100% - 32px);max-width:400px;margin:0 auto;border-radius:28px;text-align:left"></div></div>
 <nav class="nav" id="nav"><button class="on" data-t="0"><span>🌙</span>Beranda</button><button data-t="1"><span>🤲</span>Doa</button><button data-t="4"><span>📿</span>Dzikir</button><button data-t="2"><span>✨</span>Asmaul Husna</button><button data-t="3"><span>📖</span>Surat</button></nav>
@@ -164,13 +176,13 @@ const RAM=new Date('2027-02-08T00:00:00+07:00');
 function tick(){let d=RAM-new Date();if(d<0)d=0;const s=Math.floor(d/1e3);$('#cdd').textContent=Math.floor(s/86400);$('#cdh').textContent=Math.floor(s%86400/3600);$('#cdm').textContent=Math.floor(s%3600/60);$('#cds').textContent=s%60}
 tick();setInterval(tick,1000);
 // hajat
-$('#hajat').value=ld('hajat','');$('#sh').onclick=()=>{sv('hajat',$('#hajat').value);$('#sh').textContent='Tersimpan ✓';setTimeout(()=>$('#sh').textContent='Simpan hajat',1400)};
+// ripple
 // ripple
 function fx(row){const r=document.createElement('span');r.className='rip';row.appendChild(r);setTimeout(()=>r.remove(),900);for(let i=0;i<10;i++){const p=document.createElement('span');p.className='pt';const a=Math.random()*6.28,m=30+Math.random()*40;p.style.setProperty('--x',Math.cos(a)*m+'px');p.style.setProperty('--y',Math.sin(a)*m+'px');row.appendChild(p);setTimeout(()=>p.remove(),800)}}
 // amalan
 let dn=ld('amal',{});if(dn.d!==today())dn={d:today(),v:[]};
-function rAmal(){$('#amal').innerHTML=AMAL.map((a,i)=>`<div class="row" data-i="${i}"><div class="t">${a[0]}<small>${a[1]}</small></div><button class="sw ${dn.v.includes(i)?'on':''}" aria-label="${a[0]}"></button></div>`).join('')}
-rAmal();$('#amal').onclick=e=>{const r=e.target.closest('.row');if(!r)return;const i=+r.dataset.i,k=dn.v.indexOf(i);if(k<0){dn.v.push(i);fx(r)}else dn.v.splice(k,1);sv('amal',dn);r.querySelector('.sw').classList.toggle('on',k<0)};
+function rAmal(){$('#amal').innerHTML=AMAL.map((a,i)=>`<div class="row" data-i="${i}"><div class="t">${a[0]}<small>${a[1]}</small></div><button class="cbx ${dn.v.includes(i)?'on':''}" role="checkbox" aria-checked="${dn.v.includes(i)}" aria-label="${a[0]}"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>`).join('')}
+rAmal();$('#amal').onclick=e=>{const r=e.target.closest('.row');if(!r)return;const i=+r.dataset.i,k=dn.v.indexOf(i),b=r.querySelector('.cbx');if(k<0){dn.v.push(i);fx(r);hearts(b);toast('Maasya Allah, semoga konsisten! ✨')}else dn.v.splice(k,1);sv('amal',dn);b.classList.toggle('on',k<0);b.setAttribute('aria-checked',k<0)};
 // qadha
 let q=ld('qadha',{total:30,done:0});
 function rQ(){$('#qt').innerHTML='<b style="font-size:28px;color:var(--gold)">'+q.done+'</b> / '+q.total+' hari';$('#pbQ').style.width=(q.total?Math.min(100,q.done/q.total*100):0)+'%'}
@@ -255,7 +267,7 @@ $('#dzr').onclick=()=>{dz.c[dz.i]=0;sv('dzikir',dz);rDz()};
 $('#dzs').onclick=()=>{snd=!snd;sv('dz_snd',snd);if(snd)drop();rDz()};
 rDz();
 // ===== Supabase: login & sinkronisasi =====
-const SB_URL='https://wucpyghjycmbfowlhydl.supabase.co',SB_KEY='sb_publishable_Os83Fu5j4aydzm4zXjnQ-A_4wBFwjkP';
+const SB_URL='ISI_URL_PROYEK_SUPABASE',SB_KEY='ISI_ANON_KEY_SUPABASE';
 let SB=null,SBU=null,ptmr;const pend={};
 const ss=o=>JSON.stringify(o,(k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.keys(v).sort().reduce((a,x)=>(a[x]=v[x],a),{}):v);
 function push(k,v){if(!SB||!SBU)return;pend[k]=v;clearTimeout(ptmr);ptmr=setTimeout(async()=>{const rows=Object.entries(pend).map(([key,value])=>({user_id:SBU.id,key,value,updated_at:new Date().toISOString()}));for(const x in pend)delete pend[x];try{await SB.from('jl_state').upsert(rows)}catch(e){}},800)}
@@ -401,27 +413,35 @@ const cpy=(t,b)=>{const ok=()=>{b.textContent='Tersalin ✓';setTimeout(()=>b.te
 const sheetP=h=>{$('#pc').innerHTML=h;$('#psheet').classList.add('on')};
 $('#psheet').onclick=e=>{if(e.target.id==='psheet'||e.target.id==='px')$('#psheet').classList.remove('on')};
 // ===== Tracking sholat fardhu =====
+const dly=n=>n==null?'':n<=0?'Tepat saat azan':n<60?'+'+n+' menit dari azan':'+'+Math.floor(n/60)+' jam'+(n%60?' '+n%60+' menit':'')+' dari azan';
+function calcDelay(i,tm){if(!PT)return null;const [h,m]=String(tm).split(':').map(Number),a=PT[i],x=new Date(a);x.setHours(h,m,0,0);let d=x-a;if(d<-6*36e5)d+=864e5;return Math.max(0,Math.round(d/60000))}
 function rS(){const D=gd(today()),L=Object.keys(D.s);
  $('#sholat').innerHTML=PN.map((n,i)=>{const x=D.s[i];return `<button data-i="${i}" class="${x?'on':''}">${n}${x?`<small style="display:block;font-size:9px;line-height:1.3">${x[0]}<br>${x[1]==='j'?'Jamaah':'Sendiri'}</small>`:''}</button>`}).join('');
- const j=L.filter(k=>D.s[k][1]==='j').length;$('#pbS').style.width=L.length*20+'%';$('#ptS').textContent=L.length+' dari 5 sholat hari ini · '+j+' berjamaah'+(L.length==5?' · Alhamdulillah 🤍':'')}
-function rec(d,i,t,m){gd(d).s[i]=[t,m];_sv('log',LG);if(typeof push==='function')push('log',LG);rS();chk(true);rCons()}
+ const j=L.filter(k=>D.s[k][1]==='j').length;$('#pbS').style.width=L.length*20+'%';$('#ptS').textContent=L.length+' dari 5 sholat hari ini · '+j+' berjamaah'+(L.length==5?' · Alhamdulillah 🤍':'');
+ $('#ptD').innerHTML=L.sort().map(k=>{const x=D.s[k];return `<div class="dl"><span>${PN[k]}</span><span>${x[0]} · ${x[1]==='j'?'Berjamaah':'Sendiri'}</span><b>${dly(x[2])||'-'}</b></div>`}).join('')}
+function rec(d,i,t,m,dl){gd(d).s[i]=[t,m,dl];_sv('log',LG);if(typeof push==='function')push('log',LG);rS();chk(true);rCons()}
 function openLog(i){const d=today(),x=gd(d).s[i];let mode=x?x[1]:'s';
  sheetP(`<div class="ttl"><span>Catat Sholat ${PN[i]}</span><button class="lk" id="px" style="float:none;font-size:18px">✕</button></div><div class="ar2" style="margin:8px 0 4px">Jam pelaksanaan</div><input type="time" id="lt" value="${x?x[0]:mm()}"><div class="dch" id="lm" style="margin:12px 0 8px"><button data-m="j" class="${mode==='j'?'on':''}">🕌 Berjamaah</button><button data-m="s" class="${mode==='s'?'on':''}">👤 Sendiri (munfarid)</button></div><div style="display:flex;gap:8px;justify-content:center"><button class="btn" id="lsv">Simpan</button>${x?'<button class="btn" id="ldl" style="background:var(--glass);color:var(--tx);border:1px solid var(--bd)">Hapus catatan</button>':''}</div>`);
  $('#lm').onclick=e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;document.querySelectorAll('#lm button').forEach(y=>y.classList.toggle('on',y===b))};
- $('#lsv').onclick=()=>{rec(d,i,$('#lt').value||mm(),mode);$('#psheet').classList.remove('on')};
+ $('#lsv').onclick=()=>{rec(d,i,$('#lt').value||mm(),mode,calcDelay(i,$('#lt').value||mm()));$('#psheet').classList.remove('on')};
  const dl=$('#ldl');if(dl)dl.onclick=()=>{delete gd(d).s[i];_sv('log',LG);if(typeof push==='function')push('log',LG);rS();chk(true);rCons();$('#psheet').classList.remove('on')}}
 $('#sholat').onclick=e=>{const b=e.target.closest('button');if(b)openLog(+b.dataset.i)};rS();
 // ===== Pengingat sholat (sticky) =====
 let bnKey='',bnMode='s',bnP=null;
 function pendP(){if(!PT)return null;const n=new Date();let i=-1;for(let k=0;k<5;k++)if(PT[k]<=n)i=k;let d=today(),tm;
  if(i<0){d=fd(new Date(n.getTime()-864e5));i=4;tm=new Date(PT[4].getTime()-864e5)}else tm=PT[i];return gd(d).s[i]?null:{i,d,tm}}
-function chk(force){const el=$('#bn'),P=ST.rm===false?null:pendP();bnP=P;if(!P){el.style.display='none';bnKey='';document.documentElement.style.setProperty('--bnp','0px');return}
- const key=P.d+P.i;if(key!==bnKey||force){bnKey=key;if(key!==bnKey||!force)bnMode='s';
-  el.innerHTML=`<div class="ttl"><span>🕌 Waktu ${PN[P.i]} telah masuk</span><span class="fn" style="margin:0">${p2(P.tm.getHours())}:${p2(P.tm.getMinutes())}</span></div><div class="ar2" style="margin:6px 0 8px">Segera tunaikan sholatmu. Pengingat ini tetap tampil sampai kamu mengonfirmasi.</div><div class="dch" id="bm" style="margin:0 0 8px"><button data-m="j" class="${bnMode==='j'?'on':''}">🕌 Berjamaah</button><button data-m="s" class="${bnMode==='s'?'on':''}">👤 Sendiri</button></div><button class="btn" id="bok" style="width:100%">Saya Telah Melaksanakan Sholat</button>`;
-  if(!force&&navigator.vibrate)try{navigator.vibrate([60,40,60])}catch(e){}}
- el.style.display='block';document.documentElement.style.setProperty('--bnp',(el.offsetHeight+10)+'px')}
+let bnSn={};try{bnSn=JSON.parse(localStorage.getItem('jl_sn')||'{}')}catch(e){}
+function chk(force){const el=$('#bn'),P=ST.rm===false?null:pendP();bnP=P;
+ if(!P){el.style.display='none';bnKey='';return}
+ const key=P.d+P.i;if(bnSn[key]&&Date.now()<bnSn[key]){el.style.display='none';bnKey='';return}
+ if(key!==bnKey||force){const first=key!==bnKey;bnKey=key;if(first)bnMode='s';
+  el.innerHTML=`<div class="bnc"><div style="font-size:40px;line-height:1">🕌</div><div class="ttl" style="justify-content:center;margin-top:6px">Waktu ${PN[P.i]} telah masuk</div><div class="ar2">Azan ${p2(P.tm.getHours())}:${p2(P.tm.getMinutes())} · <b id="blt"></b></div><div class="ar2" style="margin:8px 0 10px">Segera tunaikan sholatmu. Pengingat ini tetap tampil sampai kamu mengonfirmasi.</div><div class="dch" id="bm" style="margin:0 0 10px"><button data-m="j" class="${bnMode==='j'?'on':''}">🕌 Berjamaah</button><button data-m="s" class="${bnMode==='s'?'on':''}">👤 Sendiri</button></div><button class="btn" id="bok" style="width:100%">Saya Telah Melaksanakan Sholat</button><button class="btn" id="bsn" style="width:100%;margin-top:8px;background:var(--glass);color:var(--tx);border:1px solid var(--bd)">Saya Belum Sempat Sholat</button><div class="fn" style="margin-top:8px">“Belum Sempat” akan mengingatkanmu lagi 10 menit kemudian.</div></div>`;
+  if(first&&navigator.vibrate)try{navigator.vibrate([60,40,60])}catch(e){}}
+ const lt=$('#blt');if(lt){const m=Math.max(0,Math.floor((Date.now()-P.tm)/60000));lt.textContent=m<1?'baru saja masuk':dly(m)}
+ el.style.display='flex'}
 $('#bn').onclick=e=>{const b=e.target.closest('#bm button');if(b){bnMode=b.dataset.m;document.querySelectorAll('#bm button').forEach(y=>y.classList.toggle('on',y===b));return}
- if(e.target.id==='bok'&&bnP)rec(bnP.d,bnP.i,mm(),bnMode)};
+ if(e.target.id==='bok'&&bnP)rec(bnP.d,bnP.i,mm(),bnMode,Math.max(0,Math.floor((Date.now()-bnP.tm)/60000)));
+ if(e.target.id==='bsn'&&bnP){bnSn[bnP.d+bnP.i]=Date.now()+10*60000;try{localStorage.setItem('jl_sn',JSON.stringify(bnSn))}catch(x){}chk(true)}};
 setInterval(chk,1000);setTimeout(chk,300);
 // ===== Kalender & puasa sunnah =====
 const HM=['Muharram','Safar','Rabiul Awal','Rabiul Akhir','Jumadil Awal','Jumadil Akhir','Rajab','Sya’ban','Ramadan','Syawal','Dzulqa’dah','Dzulhijjah'],BL=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],HR=['Ahad','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
@@ -478,7 +498,7 @@ function shw(){const a=ASMA[cur];
  $('#bg').onclick=()=>{cnt++;$('#bg').textContent=cnt;if(navigator.vibrate)try{navigator.vibrate(15)}catch(e){}if(cnt==atg&&!ad.v.includes(cur)){ad.v.push(cur);sv('asma',ad);rA()}};
  $('#bd').onclick=()=>$('#sheet').classList.remove('on');$('#bn2').onclick=()=>{cur=(cur+1)%99;cnt=0;shw()}}
 // ===== Konsistensi 7 hari =====
-const TG={dhuha:['Sholat Dhuha',D=>D.a.includes(1)],tahajud:['Sholat Tahajud',D=>D.a.includes(0)],wirid:['Wirid harian',D=>!!D.w],dzikir:['Dzikir',D=>D.a.includes(3)||D.z>0],sedekah:['Sedekah Subuh',D=>D.a.includes(2)],fardhu:['Sholat 5 waktu penuh',D=>Object.keys(D.s).length>=5],jamaah:['Sholat berjamaah (min. 3 waktu)',D=>Object.values(D.s).filter(v=>v[1]==='j').length>=3]};
+const TG={dhuha:['Sholat Dhuha',D=>D.a.includes(1)],tahajud:['Sholat Tahajud',D=>D.a.includes(0)],wirid:['Wirid harian',D=>!!D.w],dzikir:['Dzikir',D=>D.a.includes(3)||D.z>0],sedekah:['Sedekah Subuh',D=>D.a.includes(2)],puasa:['Puasa (Qadha/Sunnah)',D=>D.p==='q'||D.p==='s'],fardhu:['Sholat 5 waktu penuh',D=>Object.keys(D.s).length>=5],jamaah:['Sholat berjamaah (min. 3 waktu)',D=>Object.values(D.s).filter(v=>v[1]==='j').length>=3]};
 const HEART='<svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
 function rCons(){const tg=ld('target',null),el=$('#cons');if(!el)return;
  if(!tg||!tg.items||!tg.items.length){el.innerHTML='<p class="ar2" style="margin:0 0 10px">Pilih ibadah yang ingin kamu jaga 7 hari ke depan.</p><button class="btn" data-go="8">Atur target</button>';return}
@@ -493,8 +513,9 @@ function rk(){const ks=rng(rkP),Ds=ks.map(k=>LG[k]||EMPTY),n=ks.length;
  const f=Ds.map(D=>Object.keys(D.s).length),fs=f.reduce((a,b)=>a+b,0),j=Ds.reduce((a,D)=>a+Object.values(D.s).filter(v=>v[1]==='j').length,0),pc=x=>Math.round(x);
  const cnt=fn=>Ds.filter(fn).length,bar=(l,v,mx,u)=>`<div class="rkr"><span>${l}</span><div class="bar" style="margin:0"><i style="width:${mx?v/mx*100:0}%"></i></div><b>${v}${u||''}</b></div>`;
  $('#rkc').innerHTML=`<div class="dch" id="rkp" style="justify-content:flex-start"><button data-p="7" class="${rkP==7?'on':''}">Mingguan (7 hari)</button><button data-p="30" class="${rkP==30?'on':''}">Bulanan (30 hari)</button></div>
- <div class="card"><h2>Sholat Fardhu</h2><div style="display:flex;gap:10px"><div class="cd" style="flex:1;margin:0"><div><b>${pc(fs/(5*n)*100)}%</b><span>terlaksana (${fs}/${5*n})</span></div><div><b>${fs?pc(j/fs*100):0}%</b><span>berjamaah (${j}/${fs})</span></div></div></div><div class="bars">${f.map((v,i)=>`<i style="height:${6+v*9}px" title="${ks[i]}: ${v}/5"></i>`).join('')}</div><div class="fn">Tinggi batang = jumlah sholat tercatat tiap hari (maksimal 5).</div></div>
+ <div class="card"><h2>Sholat Fardhu</h2><div style="display:flex;gap:10px"><div class="cd" style="flex:1;margin:0"><div><b>${pc(fs/(5*n)*100)}%</b><span>terlaksana (${fs}/${5*n})</span></div><div><b>${fs?pc(j/fs*100):0}%</b><span>berjamaah (${j}/${fs})</span></div></div></div><div class="bars">${f.map((v,i)=>`<i style="height:${6+v*9}px" title="${ks[i]}: ${v}/5"></i>`).join('')}</div><div class="fn">Tinggi batang = jumlah sholat tercatat tiap hari (maksimal 5).</div>${avgD(Ds)}</div>
  <div class="card"><h2>Amalan Sunnah</h2>${bar('Sholat Dhuha',cnt(D=>D.a.includes(1)),n,' hari')}${bar('Sholat Tahajud',cnt(D=>D.a.includes(0)),n,' hari')}${bar('Wirid harian',cnt(D=>!!D.w),n,' hari')}${bar('Dzikir',cnt(D=>D.a.includes(3)||D.z>0),n,' hari')}${bar('Sedekah Subuh',cnt(D=>D.a.includes(2)),n,' hari')}</div>
+ <div class="card"><h2>Riwayat Puasa</h2>${bar('Puasa Qadha',cnt(D=>D.p==='q'),n,' hari')}${bar('Puasa Sunnah',cnt(D=>D.p==='s'),n,' hari')}${bar('Tidak puasa',cnt(D=>D.p==='t'),n,' hari')}<div class="pstrip">${Ds.map((D,i)=>`<i class="${D.p||''}" title="${ks[i]}"></i>`).join('')}</div><div class="fn">Kotak: biru = Qadha, emas = Sunnah, abu = tidak puasa. Dicatat dari pertanyaan di Rayuan Hari Ini.</div></div>
  <div class="card"><h2>Progress Qadha Puasa</h2><div class="n"><b style="font-size:26px;color:var(--gold)">${q.done}</b> / ${q.total} hari</div><div class="bar"><i style="width:${q.total?Math.min(100,q.done/q.total*100):0}%"></i></div><div class="ar2">${q.total-q.done>0?'Sisa '+(q.total-q.done)+' hari lagi. Semangat melunasi hutang puasa.':'Alhamdulillah, qadha puasamu lunas.'}</div></div>`}
 $('#rkc').onclick=e=>{const b=e.target.closest('#rkp button');if(b){rkP=+b.dataset.p;rk()}};
 // ===== Pengaturan =====
@@ -510,4 +531,12 @@ $('#stc').onclick=e=>{const k=e.target.closest('#tgc [data-k]');
  if(e.target.id==='stn'){$('#gedit').click();return}if(e.target.id==='stl'){getLoc()}};
 const _g=goTab;goTab=function(n){_g(n);if(n==7)rk();if(n==8)stR();if(n==6)rW()};
 $('#slb2').onclick=$('#slb3').onclick=$('#slb4').onclick=()=>goTab(0);
+
+// ===== Hajat di kartu sapaan, toast, puasa harian =====
+function rHj(){const h=ld('hajat','');$('#ghj').innerHTML=h&&typeof h==='string'?'🤲 “'+esc(h)+'”':'<span style="color:var(--mut)">✎ Tulis hajat utamamu</span>'}
+$('#ghj').onclick=()=>{const v=prompt('Hajat utamamu (singkat):',ld('hajat','')||'');if(v!==null){sv('hajat',v.trim().slice(0,120));rHj()}};rHj();
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2700)}
+const avgD=Ds=>{const a=[];Ds.forEach(D=>Object.values(D.s).forEach(x=>{if(x[2]!=null)a.push(x[2])}));return a.length?`<div class="ar2" style="margin-top:8px">Rata-rata keterlambatan: <b style="color:var(--gold)">${dly(Math.round(a.reduce((s,v)=>s+v,0)/a.length))}</b> (${a.length} catatan)</div>`:''};
+function rPz(){const v=gd(today()).p;document.querySelectorAll('#pz button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('#pzn').textContent=v==='q'?'Tercatat: Puasa Qadha hari ini.':v==='s'?'Tercatat: Puasa Sunnah hari ini.':v==='t'?'Tercatat: Tidak berpuasa hari ini.':''}
+$('#pz').onclick=e=>{const b=e.target.closest('button');if(!b)return;const D=gd(today());D.p=D.p===b.dataset.v?undefined:b.dataset.v;_sv('log',LG);rPz();rCons();if(D.p==='q'||D.p==='s'){hearts(b);toast('Tercatat. Semoga puasamu diterima 🤍')}};rPz();
 </script></body></html>

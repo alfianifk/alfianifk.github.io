@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Email Terkonfirmasi · Jalur Langit</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#E6F5FD;--bg2:#BFE6F6;--gold:#1479B3;--leaf:#2E7D55;--tx:#0F3A4D;--mut:rgba(15,58,77,.64);--bd:rgba(255,255,255,.9)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--tx);background:var(--bg)}
+body{display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);overflow:hidden;position:relative}
+.bg{position:fixed;inset:0;background:linear-gradient(160deg,var(--bg2),var(--bg) 60%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.6;animation:fl 18s ease-in-out infinite alternate}
+.b1{width:300px;height:300px;background:#5BC0F0;top:-60px;right:-80px}.b2{width:340px;height:340px;background:#5FAE7A;top:45%;left:-140px;animation-delay:-6s}.b3{width:240px;height:240px;background:#7FD6C4;bottom:-60px;right:-40px;opacity:.5;animation-delay:-11s}.b4{width:260px;height:260px;background:rgba(243,198,73,.7);top:12%;left:-80px;animation-delay:-3s}
+@keyframes fl{to{transform:translate(30px,-40px) scale(1.15)}}
+.card{position:relative;width:100%;max-width:400px;text-align:center;padding:34px 24px 26px;border-radius:32px;background:rgba(255,255,255,.45);-webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);border:1px solid var(--bd);box-shadow:0 14px 50px rgba(20,90,130,.2),inset 0 1px 0 #fff;animation:in .6s ease}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.cres{width:84px;height:84px;filter:drop-shadow(0 0 16px rgba(243,198,73,.9));animation:br 3.4s ease-in-out infinite}
+@keyframes br{50%{transform:scale(1.1);filter:drop-shadow(0 0 28px rgba(243,198,73,1))}}
+.ck{width:64px;height:64px;margin:14px auto 4px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#2FB59A);box-shadow:0 0 28px rgba(27,139,201,.45);animation:pop .6s .2s cubic-bezier(.3,1.6,.5,1) both}
+.ck svg{width:32px;height:32px}.ck path{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:50;stroke-dashoffset:50;animation:dr .5s .65s ease forwards}
+.ck.err{background:linear-gradient(135deg,#d9773a,#e6a04a);box-shadow:0 0 28px rgba(217,119,58,.4)}
+@keyframes pop{from{transform:scale(0)}}@keyframes dr{to{stroke-dashoffset:0}}
+h1{font-size:23px;margin:14px 0 8px}p{font-size:14px;line-height:1.7;color:var(--mut);margin:0}
+.ayat{margin-top:16px;padding:12px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid var(--bd);font-size:13px;color:var(--tx);line-height:1.6}
+.btn{display:inline-flex;align-items:center;justify-content:center;margin-top:20px;height:40px;padding:0 20px;border-radius:10px;background:var(--gold);color:#fff;font:600 14px inherit;font-family:inherit;text-decoration:none;border:0}
+.mf{margin-top:20px;font-size:12px;color:var(--mut)}.mf a{color:var(--gold);font-weight:700;text-decoration:none}
+.h{display:none}
+</style></head><body>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+<main class="card">
+<svg class="cres" viewBox="0 0 100 100"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBE08A"/><stop offset="1" stop-color="#E0AE2F"/></linearGradient><mask id="cm"><rect width="100" height="100" fill="#fff"/><circle cx="62" cy="42" r="30" fill="#000"/></mask></defs><circle cx="50" cy="52" r="36" fill="url(#gg)" mask="url(#cm)"/><path d="M72 22l2.6 6.2 6.6.5-5 4.4 1.6 6.5-5.8-3.5-5.8 3.5 1.6-6.5-5-4.4 6.6-.5z" fill="url(#gg)"/></svg>
+<div id="ok">
+<div class="ck"><svg viewBox="0 0 40 40"><path d="M9 21l8 8 14-17"/></svg></div>
+<h1>Alhamdulillah, email terkonfirmasi</h1>
+<p>Akun Jalur Langit-mu sudah aktif. Sekarang kamu bisa masuk, dan amalanmu akan tersimpan serta ikut ke semua perangkat.</p>
+<div class="ayat">Level Up Your Dunia, Secure Your Akhirah</div>
+<a class="btn" id="go" href="https://alfianifk.github.io/">Buka Jalur Langit</a>
+</div>
+<div id="bad" class="h">
+<div class="ck err"><svg viewBox="0 0 40 40"><path d="M13 13l14 14M27 13L13 27"/></svg></div>
+<h1>Tautan belum bisa dipakai</h1>
+<p id="why">Tautan konfirmasi sudah kedaluwarsa atau pernah dipakai. Coba masuk langsung. Kalau belum bisa, daftar ulang untuk mendapat tautan baru.</p>
+<a class="btn" href="./">Kembali ke Jalur Langit</a>
+</div>
+<div class="mf">Made with ❤️ by <a href="https://instagram.com/alfiani.fk" target="_blank" rel="noopener">@alfiani.fk</a></div>
+</main>
+<script>
+(function(){try{var q=new URLSearchParams((location.hash||'').replace(/^#/,'')+'&'+(location.search||'').replace(/^\?/,''));
+ if(q.get('error')||q.get('error_code')||q.get('error_description')){document.getElementById('ok').className='h';document.getElementById('bad').className='';
+  if((q.get('error_code')||'')==='otp_expired')document.getElementById('why').textContent='Tautan konfirmasi sudah kedaluwarsa. Daftar ulang di aplikasi untuk mendapat tautan baru.'}
+ if(history.replaceState)history.replaceState(null,'',location.pathname)}catch(e){}})();
+</script></body></html>

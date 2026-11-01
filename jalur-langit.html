@@ -234,16 +234,24 @@ const SB_URL='https://wucpyghjycmbfowlhydl.supabase.co',SB_KEY='sb_publishable_O
 let SB=null,SBU=null,ptmr;const pend={};
 const ss=o=>JSON.stringify(o,(k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.keys(v).sort().reduce((a,x)=>(a[x]=v[x],a),{}):v);
 function push(k,v){if(!SB||!SBU)return;pend[k]=v;clearTimeout(ptmr);ptmr=setTimeout(async()=>{const rows=Object.entries(pend).map(([key,value])=>({user_id:SBU.id,key,value,updated_at:new Date().toISOString()}));for(const x in pend)delete pend[x];try{await SB.from('jl_state').upsert(rows)}catch(e){}},800)}
+let accM='in';
+const UD='@jalurlangit.app',uname=u=>(u.email||'').replace(UD,'');
 function rAcc(){const b=$('#acc');
- if(SBU){b.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="ar2" style="flex:1;word-break:break-all">Masuk sebagai ${esc(SBU.email)} · data tersinkron</div><button class="btn" id="lo">Keluar</button></div>`;
+ if(SBU){b.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><div class="ar2" style="flex:1;word-break:break-all">Masuk sebagai <b>${esc(uname(SBU))}</b> · data tersinkron</div><button class="btn" id="lo">Keluar</button></div>`;
   $('#lo').onclick=async()=>{Object.keys(localStorage).filter(k=>k.startsWith('jl_')).forEach(k=>localStorage.removeItem(k));await SB.auth.signOut();location.reload()}}
- else{b.innerHTML=`<div class="ar2" style="margin-bottom:8px">Masuk agar amalanmu tersimpan dan ikut ke semua perangkat.</div><input type="text" id="nm" autocomplete="nickname" placeholder="Nama panggilan (khusus daftar)" style="margin-bottom:8px"><input type="text" id="em" inputmode="email" autocomplete="email" placeholder="Email"><input type="password" id="pw" autocomplete="current-password" placeholder="Kata sandi (min. 6 karakter)" style="margin-top:8px"><div style="display:flex;gap:8px;margin-top:10px"><button class="btn" id="li">Masuk</button><button class="btn" id="su" style="background:var(--glass);color:var(--tx);border:1px solid var(--bd)">Daftar</button></div><div class="ar2" id="am" style="margin-top:8px"></div>`;
-  const go=async mode=>{const email=$('#em').value.trim(),password=$('#pw').value;if(!email||password.length<6){$('#am').textContent='Isi email dan kata sandi (minimal 6 karakter).';return}$('#am').textContent='Memproses…';
-   try{const r=mode==='in'?await SB.auth.signInWithPassword({email,password}):await SB.auth.signUp({email,password,options:{emailRedirectTo:new URL('konfirmasi.html',location.href).href,data:{name:($('#nm').value||'').trim()}}});
-    if(r.error)$('#am').textContent=mode==='in'?'Email atau kata sandi salah, atau email belum dikonfirmasi.':'Pendaftaran gagal: '+r.error.message;
-    else if(mode==='up'&&!r.data.session)$('#am').textContent='Pendaftaran berhasil. Cek email untuk konfirmasi, lalu masuk.'}catch(e){$('#am').textContent='Tidak dapat terhubung ke server.'}};
-  $('#li').onclick=()=>go('in');$('#su').onclick=()=>go('up')}
- b.insertAdjacentHTML('afterbegin','<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Akun Jalur Langit</b><button class="lk" id="ax" style="float:none;font-size:18px">✕</button></div>');$('#ax').onclick=()=>$('#asheet').classList.remove('on');$('#abtn').textContent=SBU?'Akun':'Masuk'}
+ else{const up=accM==='up';
+  b.innerHTML=`<div class="dch" id="am2" style="justify-content:flex-start;margin:0 0 10px"><button data-m="in" class="${up?'':'on'}">Masuk</button><button data-m="up" class="${up?'on':''}">Daftar</button></div><div class="ar2" style="margin-bottom:8px">${up?'Buat akun dengan nama pengguna dan kata sandi. Tanpa email.':'Masuk agar catatan ibadahmu tersimpan realtime di semua perangkat.'}</div>${up?'<input type="text" id="nm" autocomplete="nickname" placeholder="Nama panggilan (tampil di sapaan dan doa)" style="margin-bottom:8px">':''}<input type="text" id="un" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Nama pengguna (huruf kecil, angka, _ .)"><input type="password" id="pw" autocomplete="${up?'new-password':'current-password'}" placeholder="Kata sandi (min. 6 karakter)" style="margin-top:8px"><div style="margin-top:10px"><button class="btn" id="go">${up?'Buat akun':'Masuk'}</button></div><div class="ar2" id="am" style="margin-top:8px"></div>${up?'<div class="fn">Catat kata sandimu baik-baik. Karena tanpa email, kata sandi yang lupa tidak bisa dipulihkan sendiri.</div>':''}`;
+  $('#am2').onclick=e=>{const x=e.target.closest('button');if(x){accM=x.dataset.m;rAcc()}};
+  const run=async()=>{const u=$('#un').value.trim().toLowerCase(),password=$('#pw').value;
+   if(!/^[a-z0-9_.]{3,20}$/.test(u)){$('#am').textContent='Nama pengguna 3-20 karakter: huruf kecil, angka, _ atau .';return}
+   if(password.length<6){$('#am').textContent='Kata sandi minimal 6 karakter.';return}
+   $('#am').textContent='Memproses…';const email=u+UD;
+   try{const r=up?await SB.auth.signUp({email,password,options:{data:{name:(($('#nm').value||'').trim().slice(0,30))||u}}}):await SB.auth.signInWithPassword({email,password});
+    if(r.error){const m=(r.error.message||'').toLowerCase();$('#am').textContent=up?(m.includes('registered')||m.includes('exists')?'Nama pengguna sudah dipakai. Coba yang lain.':m.includes('rate')?'Terlalu banyak percobaan. Coba lagi beberapa saat.':'Pendaftaran gagal: '+r.error.message):'Nama pengguna atau kata sandi salah.'}
+    else if(up&&!r.data.session)$('#am').textContent='Akun dibuat, tetapi konfirmasi email masih aktif di Supabase. Matikan "Confirm email", lalu coba masuk.'
+   }catch(e){$('#am').textContent='Tidak dapat terhubung ke server.'}};
+  $('#go').onclick=run;$('#pw').onkeydown=e=>{if(e.key==='Enter')run()}}
+ b.insertAdjacentHTML('afterbegin','<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Akun Jalur Langit</b><button class="lk" id="ax" style="float:none;font-size:18px">\u2715</button></div>');$('#ax').onclick=()=>$('#asheet').classList.remove('on');$('#abtn').textContent=SBU?'Akun':'Masuk'}
 async function initSB(){
  if(!window.supabase||SB_URL.startsWith('ISI'))return;
  SB=supabase.createClient(SB_URL,SB_KEY);$('#abtn').style.display='inline-flex';

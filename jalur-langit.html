@@ -2,6 +2,9 @@
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jalur Langit</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="/launchericon-192x192.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&amp;family=Amiri:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -576,4 +579,14 @@ $('#slb5').onclick=$('#slb6').onclick=()=>goTab(0);
 function askIn(title,def,type){return new Promise(res=>{sheetP(`<div class="ttl"><span>${title}</span></div><input type="${type||'text'}" id="ain" value="${String(def==null?'':def).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}" ${type==='number'?'inputmode="numeric" min="0"':''} style="margin:12px 0"><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" id="ano" style="background:var(--glass);color:var(--tx);border:1px solid var(--bd)">Batal</button><button class="btn" id="aok">Simpan</button></div>`);
  const fin=v=>{$('#psheet').classList.remove('on');res(v)};$('#ano').onclick=()=>fin(null);$('#aok').onclick=()=>fin($('#ain').value);$('#ain').onkeydown=e=>{if(e.key==='Enter')fin($('#ain').value)};setTimeout(()=>{const i=$('#ain');if(i){i.focus();i.select()}},80)})}
 function askOk(msg){return new Promise(res=>{sheetP(`<div class="ttl"><span>${msg}</span></div><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn" id="ano" style="background:var(--glass);color:var(--tx);border:1px solid var(--bd)">Batal</button><button class="btn" id="aok">Ya, hapus</button></div>`);const fin=v=>{$('#psheet').classList.remove('on');res(v)};$('#ano').onclick=()=>fin(false);$('#aok').onclick=()=>fin(true)})}
-</script></body></html>
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .catch(error => console.error("SW Error:", error));
+  });
+}
+</script>
+</body>
+</html>

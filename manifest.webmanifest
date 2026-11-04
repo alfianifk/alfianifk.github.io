@@ -1,0 +1,26 @@
+{
+  "id": "/jalur-langit.html",
+  "name": "Jalur Langit",
+  "short_name": "Jalur Langit",
+  "description": "Aplikasi Islami untuk menemani perjalanan spiritual sehari-hari. Dilengkapi jadwal salat, Al-Qur'an, doa, dzikir, panduan ibadah, serta personal ibadah tracker untuk mencatat dan memantau perkembangan ibadah harian. Bantu bangun kebiasaan baik, tingkatkan konsistensi, dan jadikan setiap hari lebih dekat kepada Allah.",
+  "start_url": "/jalur-langit.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "id",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/launchericon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/launchericon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

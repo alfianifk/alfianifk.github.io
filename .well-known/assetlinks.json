@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.alfianifk.jalurlangit",
+      "sha256_cert_fingerprints": [
+        "60:3A:82:BB:AE:F5:54:5D:7D:10:4B:74:F4:AA:33:65:01:B4:EB:16:C3:46:3A:FB:F0:81:14:48:14:CB:02:58"
+      ]
+    }
+  }
+]
